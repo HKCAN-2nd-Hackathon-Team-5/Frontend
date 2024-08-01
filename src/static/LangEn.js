@@ -1,6 +1,8 @@
 const localization = {
   title: {
     courses: 'Courses',
+    course: 'Course',
+    class: "Class",
     registerRecord: 'Register Record',
     member: 'Member'
   },

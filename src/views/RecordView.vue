@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { Plus } from '@element-plus/icons-vue'
 
 const recordList = ref([
 ]);

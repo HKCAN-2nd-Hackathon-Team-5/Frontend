@@ -40,7 +40,7 @@ const langPackage = computed(() => {
         <el-radio-button label="简" value="zh" />
       </el-radio-group>
     </el-affix>
-    <Navbar />
+    <navbar />
     <router-view />
   </el-config-provider>
 </template>

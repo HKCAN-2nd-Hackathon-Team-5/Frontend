@@ -1,5 +1,5 @@
 <script setup>
-import MemberForm from '../components/MemberForm.vue';
+import MemberForm from '../components/forms/MemberForm.vue';
 import { ref } from 'vue';
 import { Plus } from '@element-plus/icons-vue'
 
@@ -71,7 +71,7 @@ const closeForm = () => {
   <el-affix position="bottom" :offset="40" style="text-align: right;">
     <el-button :icon="Plus" size="large" circle @click="newMember"/>
   </el-affix>
-  <MemberForm
+  <member-form
     :is-show="isEditing"
     :is-new="isAdding"
     :form="memberData"

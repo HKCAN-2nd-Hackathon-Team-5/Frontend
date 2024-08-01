@@ -1,6 +1,8 @@
 const localization = {
   title: {
     courses: '课程',
+    course: '课程',
+    class: "兴趣班",
     registerRecord: '报名纪录',
     member: '会员'
   },
