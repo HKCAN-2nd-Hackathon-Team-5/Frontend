@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import { useI18n } from 'vue-i18n'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'

@@ -1,10 +1,7 @@
 <script setup>
 import MemberForm from '../components/MemberForm.vue';
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'
 import { Plus } from '@element-plus/icons-vue'
-
-const { t } = useI18n();
 
 const memberList = ref([
   {
@@ -59,12 +56,12 @@ const closeForm = () => {
     :data="memberList.slice((currentPage-1)*10, currentPage*10)"
     style="width: 100%"
     @row-click="editMember">
-    <el-table-column prop="first_name" :label="t('member.firstName')" />
-    <el-table-column prop="last_name" :label="t('member.lastName')" />
-    <el-table-column prop="gender" :label="t('member.gender')" />
-    <el-table-column prop="PHONE_NO" :label="t('member.phone')" />
-    <el-table-column prop="EMAIL" :label="t('member.email')" />
-    <el-table-column prop="CREDIT_BALANCE" :label="t('member.credit')" />
+    <el-table-column prop="first_name" :label="$t('member.firstName')" />
+    <el-table-column prop="last_name" :label="$t('member.lastName')" />
+    <el-table-column prop="gender" :label="$t('member.gender')" />
+    <el-table-column prop="PHONE_NO" :label="$t('member.phone')" />
+    <el-table-column prop="EMAIL" :label="$t('member.email')" />
+    <el-table-column prop="CREDIT_BALANCE" :label="$t('member.credit')" />
   </el-table>
   <el-pagination
     background
@@ -74,11 +71,11 @@ const closeForm = () => {
   <el-affix position="bottom" :offset="40" style="text-align: right;">
     <el-button :icon="Plus" size="large" circle @click="newMember"/>
   </el-affix>
-    <MemberForm
-      :is-show="isEditing"
-      :is-new="isAdding"
-      :form="memberData"
-      @close-dialog="closeForm" />
+  <MemberForm
+    :is-show="isEditing"
+    :is-new="isAdding"
+    :form="memberData"
+    @close-dialog="closeForm" />
 </template>
 
 <style scoped>

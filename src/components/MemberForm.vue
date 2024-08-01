@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch, defineProps, defineEmits } from 'vue';
+import { ref, reactive, watch } from 'vue';
 const props = defineProps({
   form: Object,
   isShow: {
