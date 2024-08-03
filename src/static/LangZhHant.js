@@ -9,11 +9,12 @@ const localization = {
   operation: {
     update: '更新',
     delete: '刪除',
-    cancel: '取消'
+    cancel: '取消',
+    add: '新增'
   },
   member: {
     personalInfo: '個人資料',
-    addMember: "添加會員",
+    addMember: "新增會員",
     firstName: '名',
     lastName: '姓',
     gender: '性別',
@@ -24,6 +25,9 @@ const localization = {
     city: '城市',
     postal: '郵區編號',
     credit: '餘額',
+    male: '男',
+    female: '女',
+    other: '其他'
   }
 };
 

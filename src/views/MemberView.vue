@@ -52,30 +52,32 @@ const closeForm = () => {
 </script>
 
 <template>
-  <el-table
-    :data="memberList.slice((currentPage-1)*10, currentPage*10)"
-    style="width: 100%"
-    @row-click="editMember">
-    <el-table-column prop="first_name" :label="$t('member.firstName')" />
-    <el-table-column prop="last_name" :label="$t('member.lastName')" />
-    <el-table-column prop="gender" :label="$t('member.gender')" />
-    <el-table-column prop="PHONE_NO" :label="$t('member.phone')" />
-    <el-table-column prop="EMAIL" :label="$t('member.email')" />
-    <el-table-column prop="CREDIT_BALANCE" :label="$t('member.credit')" />
-  </el-table>
-  <el-pagination
-    background
-    v-model:current-page="currentPage"
-    :total="memberList.length"
-    layout="prev, pager, next, total" />
-  <el-affix position="bottom" :offset="40" style="text-align: right;">
-    <el-button :icon="Plus" size="large" circle @click="newMember"/>
-  </el-affix>
-  <member-form
-    :is-show="isEditing"
-    :is-new="isAdding"
-    :form="memberData"
-    @close-dialog="closeForm" />
+  <div>
+    <el-table
+      :data="memberList.slice((currentPage-1)*10, currentPage*10)"
+      style="width: 100%"
+      @row-click="editMember">
+      <el-table-column fixed prop="first_name" :label="$t('member.firstName')" />
+      <el-table-column fixed prop="last_name" :label="$t('member.lastName')" />
+      <el-table-column prop="gender" :label="$t('member.gender')" />
+      <el-table-column prop="PHONE_NO" :label="$t('member.phone')" />
+      <el-table-column prop="EMAIL" :label="$t('member.email')" />
+      <el-table-column prop="CREDIT_BALANCE" :label="$t('member.credit')" />
+    </el-table>
+    <el-pagination
+      background
+      v-model:current-page="currentPage"
+      :total="memberList.length"
+      layout="prev, pager, next, total" />
+    <el-affix position="bottom" :offset="40" style="text-align: right;">
+      <el-button :icon="Plus" size="large" circle @click="newMember"/>
+    </el-affix>
+    <member-form
+      :is-show="isEditing"
+      :is-new="isAdding"
+      :form="memberData"
+      @close-dialog="closeForm" />
+  </div>
 </template>
 
 <style scoped>

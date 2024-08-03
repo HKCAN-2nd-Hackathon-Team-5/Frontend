@@ -1,8 +1,9 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import { useI18n } from 'vue-i18n'
+import { useLanguageStore } from './stores/language'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import en from 'element-plus/es/locale/lang/en'
 import zhTw from 'element-plus/es/locale/lang/zh-tw'
@@ -11,14 +12,11 @@ const { locale } = useI18n();
 if (!localStorage.getItem('language')) {
   localStorage.setItem('language', 'en');
 }
-locale.value = localStorage.getItem('language');
-const lang = ref(localStorage.getItem('language'));
-const changeLang = () => {
-  localStorage.setItem('language', lang.value);
-  locale.value = localStorage.getItem('language');
-}
+const langStore = useLanguageStore();
+langStore.changeLang(localStorage.getItem('language'));
 const langPackage = computed(() => {
-  switch(lang.value) {
+  locale.value = langStore.lang;
+  switch(langStore.lang) {
     case 'en':
       return en;
     case 'zh-Hant':
@@ -33,18 +31,15 @@ const langPackage = computed(() => {
 
 <template>
   <el-config-provider :locale="langPackage">
-    <el-affix :offset="20" style="text-align: right;">
-      <el-radio-group v-model="lang" @change="changeLang">
-        <el-radio-button label="EN" value="en" />
-        <el-radio-button label="繁" value="zh-Hant" />
-        <el-radio-button label="简" value="zh" />
-      </el-radio-group>
-    </el-affix>
     <navbar />
-    <router-view />
+    <router-view class="router-view-style"/>
   </el-config-provider>
 </template>
 
 <style scoped>
-
+  .router-view-style {
+    margin: 0 3vw;
+    background: white;
+    height: 60vh;
+  }
 </style>

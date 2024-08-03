@@ -18,16 +18,18 @@ const closeForm = () => {
 </script>
 
 <template>
-  <el-table
-    :data="recordList.slice((currentPage-1)*10, currentPage*10)"
-    style="width: 100%"
-    @row-click="editRecord">
-  </el-table>
-  <el-pagination
-    background
-    v-model:current-page="currentPage"
-    :total="recordList.length"
-    layout="prev, pager, next, total" />
+  <div>
+    <el-table
+      :data="recordList.slice((currentPage-1)*10, currentPage*10)"
+      style="width: 100%"
+      @row-click="editRecord">
+    </el-table>
+    <el-pagination
+      background
+      v-model:current-page="currentPage"
+      :total="recordList.length"
+      layout="prev, pager, next, total" />
+  </div>
 </template>
 
 <style scoped>

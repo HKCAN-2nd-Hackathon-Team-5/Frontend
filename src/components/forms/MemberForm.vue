@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, onMounted, onUnmounted } from 'vue';
 const props = defineProps({
   form: Object,
   isShow: {
@@ -33,19 +33,34 @@ watch(() => props.isShow, (newVisible, oldVisible) => {
     memberForm.value = {...props.form};
   }
 });
+const dialogWidth = ref("50%");
+const handleResize = () => {
+  if (window.innerWidth < 500) {
+    dialogWidth.value = "90%"
+  } else {
+    dialogWidth.value = "50%"
+  }
+}
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+  handleResize()
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 
 const genderOptions = [
   {
     value: 'M',
-    label: 'Male',
+    label: 'male',
   },
   {
     value: 'F',
-    label: 'Female',
+    label: 'female',
   },
   {
     value: 'Other',
-    label: 'Other',
+    label: 'other',
   },
 ];
 
@@ -79,6 +94,7 @@ const rules = reactive({
     :title="props.isNew ? $t('member.addMember') : $t('member.personalInfo')"
     v-model="dialogVisible"
     top="5vh"
+    :width="dialogWidth"
     @closed="closeDialog"
     :close-on-click-modal="false"
     :close-on-press-escape="false">
@@ -92,12 +108,11 @@ const rules = reactive({
       <el-form-item :label="$t('member.gender')" required>
         <el-select
           v-model="memberForm.GENDER"
-          placeholder="Select"
         >
           <el-option
             v-for="item in genderOptions"
             :key="item.value"
-            :label="item.label"
+            :label="$t('member.'+item.label)"
             :value="item.value"
           />
         </el-select>
@@ -113,21 +128,33 @@ const rules = reactive({
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('member.phone')" prop="PHONE_NO">
-        <el-input v-model="memberForm.PHONE_NO" />
-      </el-form-item>
-      <el-form-item :label="$t('member.email')" prop="EMAIL">
-        <el-input v-model="memberForm.EMAIL" />
-      </el-form-item>
+      <el-row>
+        <el-col :span="10">
+          <el-form-item :label="$t('member.phone')" prop="PHONE_NO">
+            <el-input v-model="memberForm.PHONE_NO" />
+          </el-form-item>
+        </el-col>
+        <el-col :offset="1" :span="13">
+          <el-form-item :label="$t('member.email')" prop="EMAIL">
+            <el-input v-model="memberForm.EMAIL" />
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-form-item :label="$t('member.address')" required>
         <el-input v-model="memberForm.ADDRESS" />
       </el-form-item>
-      <el-form-item :label="$t('member.city')" required>
-        <el-input v-model="memberForm.CITY" />
-      </el-form-item>
-      <el-form-item :label="$t('member.postal')" prop="POSTAL_CODE">
-        <el-input v-model="memberForm.POSTAL_CODE" />
-      </el-form-item>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item :label="$t('member.city')" required>
+            <el-input v-model="memberForm.CITY" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item :label="$t('member.postal')" prop="POSTAL_CODE">
+            <el-input v-model="memberForm.POSTAL_CODE" />
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-form-item :label="$t('member.credit')" required>
         <el-input-number
           v-model="memberForm.CREDIT_BALANCE"
@@ -135,7 +162,7 @@ const rules = reactive({
       </el-form-item>
       <el-form-item>
         <el-col :span="21">
-          <el-button type="primary" @click="updateMember">{{ $t('operation.update') }}</el-button>
+          <el-button type="success" @click="updateMember">{{ props.isNew?$t('operation.add'):$t('operation.update') }}</el-button>
           <el-button @click="closeDialog">{{ $t('operation.cancel') }}</el-button>
         </el-col>
         <el-col :span="2">

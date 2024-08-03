@@ -9,11 +9,12 @@ const localization = {
   operation: {
     update: 'Update',
     delete: 'Delete',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    add: 'Add'
   },
   member: {
     personalInfo: 'Personal Information',
-    addMember: "Adding Member",
+    addMember: "Add Member",
     firstName: 'First Name',
     lastName: 'Last Name',
     gender: 'Gender',
@@ -24,6 +25,9 @@ const localization = {
     city: 'City',
     postal: 'Postal Code',
     credit: 'Credit Balance',
+    male: 'Male',
+    female: 'Female',
+    other: 'Other'
   }
 };
 
