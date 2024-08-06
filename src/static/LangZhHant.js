@@ -4,17 +4,50 @@ const localization = {
     course: '課程',
     class: "興趣班",
     registerRecord: '報名紀錄',
-    member: '會員'
+    student: '學生'
   },
   operation: {
+    adminLogin: '管理員登入',
+    logout: '登出',
     update: '更新',
     delete: '刪除',
     cancel: '取消',
     add: '新增'
   },
-  member: {
+  course: {
+    courseDetail: '課程詳情',
+    createCourse: '新增課程',
+    courseTitle: '課程標題',
+    description: '描述',
+    startDate: '開始日期',
+    endDate: '完結日期',
+    forKids: '兒童活動',
+    earlyBird: '早鳥優惠',
+    discount: '折扣',
+    igDiscount: 'Instagram粉絲折扣',
+    additionalQuestion: '附加問題'
+  },
+  class: {
+    classDetail: '興趣班詳情',
+    createClass: '新增興趣班',
+    className: '興趣班名稱',
+    tutorName: '導師名稱',
+    venue: '地點',
+    startDate: '開始日期',
+    endDate: '完結日期',
+    weekday: '平日',
+    exceptedDate: '除外日期',
+    startTime: '開始時間',
+    endTime: '完結時間',
+    capacity: '人數',
+    price: '費用',
+    maxAge: '年齡上限',
+    minAge: '年齡下限',
+    minAttendance: '最少出席日數'
+  },
+  student: {
     personalInfo: '個人資料',
-    addMember: "新增會員",
+    addStudent: "新增學生",
     firstName: '名',
     lastName: '姓',
     gender: '性別',

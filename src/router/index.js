@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CourseView from '../views/CourseView.vue'
 import RecordView from '../views/RecordView.vue'
-import MemberView from '../views/MemberView.vue'
+import StudentView from '../views/StudentView.vue'
+import { useProfileStore } from '../stores/profile'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,11 +25,21 @@ const router = createRouter({
       component: RecordView
     },
     {
-      path: '/member',
-      name: 'member',
-      component: MemberView
+      path: '/student',
+      name: 'student',
+      component: StudentView
     },
   ]
+})
+
+router.beforeEach(async (to, from) => {
+  const profileStore = useProfileStore()
+  if (
+    !profileStore.loggedIn &&
+    to.name !== 'courses'
+  ) {
+    return { name: 'courses' }
+  }
 })
 
 export default router

@@ -14,13 +14,13 @@ import LangZhHant from './static/LangZhHant'
 import LangZh from './static/LangZh'
 
 const i18n = createI18n({
-  locale: localStorage.getItem("language")||'en',
+  locale: 'en',
   legacy: false,
   globalInjection: true,
   messages: {
     'en': LangEn,
     'zh': LangZh,
-    'zh-Hant': LangZhHant
+    'zh_Hant': LangZhHant
   }
 })
 const app = createApp(App)

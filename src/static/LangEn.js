@@ -4,17 +4,50 @@ const localization = {
     course: 'Course',
     class: "Class",
     registerRecord: 'Register Record',
-    member: 'Member'
+    student: 'Student'
   },
   operation: {
+    adminLogin: 'Log In as Admin',
+    logout: 'Log Out',
     update: 'Update',
     delete: 'Delete',
     cancel: 'Cancel',
     add: 'Add'
   },
-  member: {
+  course: {
+    courseDetail: 'Course Detail',
+    createCourse: 'Create Course',
+    courseTitle: 'Course Title',
+    description: 'Description',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    forKids: 'For Kids',
+    earlyBird: 'Early Bird',
+    discount: 'Discount',
+    igDiscount: 'Instagram Follower Discount',
+    additionalQuestion: 'Additional Question'
+  },
+  class: {
+    classDetail: 'Class Detail',
+    createClass: 'Create Class',
+    className: 'Class Name',
+    tutorName: 'Tutor Name',
+    venue: 'Venue',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    weekday: 'Weekday',
+    exceptedDate: 'Excepted Date',
+    startTime: 'Start Time',
+    endTime: 'End time',
+    capacity: 'Capacity',
+    price: 'Price',
+    maxAge: 'Max Age',
+    minAge: 'Min Age',
+    minAttendance: 'Min Attendance'
+  },
+  student: {
     personalInfo: 'Personal Information',
-    addMember: "Add Member",
+    addstudent: "Add Student",
     firstName: 'First Name',
     lastName: 'Last Name',
     gender: 'Gender',

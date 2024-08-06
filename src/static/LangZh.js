@@ -4,17 +4,50 @@ const localization = {
     course: '课程',
     class: "兴趣班",
     registerRecord: '报名纪录',
-    member: '会员'
+    student: '学生'
   },
   operation: {
+    adminLogin: '管理员登录',
+    logout: '退出',
     update: '更新',
     delete: '删除',
     cancel: '取消',
     add: '添加'
   },
-  member: {
+  course: {
+    courseDetail: '课程详情',
+    createCourse: '添加课程',
+    courseTitle: '课程',
+    description: '描述',
+    startDate: '开始日期',
+    endDate: '完结日期',
+    forKids: '儿童活动',
+    earlyBird: '早鸟优惠',
+    discount: '折扣',
+    igDiscount: 'Instagram粉丝折扣',
+    additionalQuestion: '附加问题'
+  },
+  class: {
+    classDetail: '兴趣班详情',
+    createClass: '添加兴趣班',
+    className: '兴趣班名称',
+    tutorName: '导师名称',
+    venue: '地点',
+    startDate: '开始日期',
+    endDate: '完结日期',
+    weekday: '平日',
+    exceptedDate: '除外日期',
+    startTime: '开始时间',
+    endTime: '完结时间',
+    capacity: '人数',
+    price: '费用',
+    maxAge: '年龄上限',
+    minAge: '年龄下限',
+    minAttendance: '最少出席日数'
+  },
+  student: {
     personalInfo: '个人信息',
-    addMember: "添加会员",
+    addStudent: "添加学生",
     firstName: '名',
     lastName: '姓',
     gender: '性別',

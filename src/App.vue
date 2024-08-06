@@ -9,17 +9,13 @@ import en from 'element-plus/es/locale/lang/en'
 import zhTw from 'element-plus/es/locale/lang/zh-tw'
 
 const { locale } = useI18n();
-if (!localStorage.getItem('language')) {
-  localStorage.setItem('language', 'en');
-}
 const langStore = useLanguageStore();
-langStore.changeLang(localStorage.getItem('language'));
 const langPackage = computed(() => {
   locale.value = langStore.lang;
   switch(langStore.lang) {
     case 'en':
       return en;
-    case 'zh-Hant':
+    case 'zh_Hant':
       return zhTw;
     case 'zh':
       return zhCn;
@@ -40,6 +36,5 @@ const langPackage = computed(() => {
   .router-view-style {
     margin: 0 3vw;
     background: white;
-    height: 60vh;
   }
 </style>

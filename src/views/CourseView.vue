@@ -10,11 +10,11 @@ const activeName = ref('course');
 <template>
   <el-tabs tab-position="left" v-model="activeName">
     <el-tab-pane :label="$t('title.course')" name="course">
-      <course-tab />
     </el-tab-pane>
     <el-tab-pane  :label="$t('title.class')" name="class">
-      <class-tab />
     </el-tab-pane>
+  <course-tab v-if="activeName==='course'" />
+  <class-tab v-if="activeName==='class'" />
   </el-tabs>
 </template>
 
