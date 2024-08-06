@@ -7,10 +7,6 @@ const api = ({method, url, body, username, password}) => {
     username: username || profileStore.username,
     password: password || profileStore.password
   }
-  if (!profileStore.loggedIn) {
-    admin.username = 'cicspublic'
-    admin.password = 'cicspublic'
-  }
   return fetch(BASE_URL + url, {
     method: method,
     headers: {
@@ -33,10 +29,12 @@ export default {
   },
 
   /* ----course---- */
-  getCourseList() {
+  getCourseList(username, password) {
     return api({
       method: 'GET',
       url: '/form',
+      username: username,
+      password: password
     })
   },
   addCourse(body) {

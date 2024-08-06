@@ -63,7 +63,13 @@ const localization = {
     credit: '餘額',
     male: '男',
     female: '女',
-    other: '其他'
+    other: '其他',
+    markham: '萬錦市',
+    richmondHill: '列治文山',
+    scarborough: '士嘉堡',
+    cityOfToronto: '多倫多市',
+    northYork: '北約克',
+    others: '其他'
   },
   application: {
     register: '報名',

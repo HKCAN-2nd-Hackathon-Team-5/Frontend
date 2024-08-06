@@ -9,7 +9,7 @@ const loading = ref(false)
 const courseList = ref([]);
 const refreshCourseList = () => {
   loading.value = true;
-  apis.getCourseList()
+  apis.getCourseList('cicspublic', 'cicspublic')
   .then(res => res.json())
   .then(json => {
     courseList.value = json

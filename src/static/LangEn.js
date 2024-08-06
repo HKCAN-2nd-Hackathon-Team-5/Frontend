@@ -63,7 +63,13 @@ const localization = {
     credit: 'Credit Balance',
     male: 'Male',
     female: 'Female',
-    other: 'Other'
+    other: 'Other',
+    markham: 'Markham',
+    richmondHill: 'Richmond Hill',
+    scarborough: 'Scarborough',
+    cityOfToronto: 'City of Toronto',
+    northYork: 'North York',
+    others: 'Others'
   },
   application: {
     register: 'Register',
