@@ -183,10 +183,10 @@ onUnmounted(() => {
       :model="courseForm"
       label-width="auto">
       <el-form-item :label="$t('course.courseTitle')" required>
-        <multi-lang-input prop-name="title" v-model="courseForm.title" />
+        <multi-lang-input prop-name="title" v-model="courseForm.title" required/>
       </el-form-item>
       <el-form-item :label="$t('course.description')" required>
-        <multi-lang-input isTextarea prop-name="title" v-model="courseForm.desc" />
+        <multi-lang-input isTextarea prop-name="desc" v-model="courseForm.desc" required/>
       </el-form-item>
       <el-form-item :label="$t('course.startDate')" required>
         <el-date-picker

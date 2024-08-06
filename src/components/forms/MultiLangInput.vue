@@ -8,18 +8,22 @@ const props = defineProps({
   isTextarea: {
     type: Boolean,
     default: false
-  }
+  },
+  required: {
+    type: Boolean,
+    default: false
+  },
 });
 </script>
 
 <template>
-  <el-form-item :prop="propName+'.en'" required>
+  <el-form-item :prop="propName+'.en'" :required="required">
     <el-input :type="isTextarea?'textarea':'text'" v-model="model.en" placeholder="EN" />
   </el-form-item>
-  <el-form-item :prop="propName+'.zh_Hant'" required>
+  <el-form-item :prop="propName+'.zh_Hant'" :required="required">
     <el-input :type="isTextarea?'textarea':'text'" v-model="model.zh_Hant" placeholder="繁" />
   </el-form-item>
-  <el-form-item :prop="propName+'.zh'" required>
+  <el-form-item :prop="propName+'.zh'" :required="required">
     <el-input :type="isTextarea?'textarea':'text'" v-model="model.zh" placeholder="简" />
   </el-form-item>
 </template>
