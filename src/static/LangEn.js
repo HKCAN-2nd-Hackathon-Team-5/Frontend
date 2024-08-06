@@ -33,14 +33,17 @@ const localization = {
     className: 'Class Name',
     tutorName: 'Tutor Name',
     venue: 'Venue',
+    date: 'Date',
     startDate: 'Start Date',
     endDate: 'End Date',
     weekday: 'Weekday',
     exceptedDate: 'Excepted Date',
+    time: 'Time',
     startTime: 'Start Time',
     endTime: 'End time',
     capacity: 'Capacity',
     price: 'Price',
+    age: 'Age',
     maxAge: 'Max Age',
     minAge: 'Min Age',
     minAttendance: 'Min Attendance'
@@ -61,6 +64,12 @@ const localization = {
     male: 'Male',
     female: 'Female',
     other: 'Other'
+  },
+  application: {
+    register: 'Register',
+    consent: 'Consent',
+    next: 'Next',
+    back: 'Back'
   }
 };
 

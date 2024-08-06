@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue';
 import MultiLangInput from './MultiLangInput.vue';
 import apis from '../../apis';
 

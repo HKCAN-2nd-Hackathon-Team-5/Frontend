@@ -33,14 +33,17 @@ const localization = {
     className: '興趣班名稱',
     tutorName: '導師名稱',
     venue: '地點',
+    date: '日期',
     startDate: '開始日期',
     endDate: '完結日期',
-    weekday: '平日',
+    weekday: '逢星期',
     exceptedDate: '除外日期',
+    time: '時間',
     startTime: '開始時間',
     endTime: '完結時間',
     capacity: '人數',
     price: '費用',
+    age: '年齡',
     maxAge: '年齡上限',
     minAge: '年齡下限',
     minAttendance: '最少出席日數'
@@ -61,6 +64,12 @@ const localization = {
     male: '男',
     female: '女',
     other: '其他'
+  },
+  application: {
+    register: '報名',
+    consent: '同意',
+    next: '下一步',
+    back: '上一步'
   }
 };
 

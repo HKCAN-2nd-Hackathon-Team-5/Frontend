@@ -33,8 +33,10 @@ const langPackage = computed(() => {
 </template>
 
 <style scoped>
-  .router-view-style {
-    margin: 0 3vw;
-    background: white;
-  }
+.router-view-style {
+  margin: 0 3vw;
+  background: white;
+  max-height: 65vh;
+  overflow-y: auto;
+}
 </style>
