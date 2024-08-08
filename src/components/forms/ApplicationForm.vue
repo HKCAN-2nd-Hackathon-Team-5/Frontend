@@ -60,6 +60,11 @@ const rules = reactive({
     pattern: /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/,
     message: 'Please input valid postal code',
     trigger: ['blur', 'change']
+  }],
+  'application.self_leave_phone_no': [{
+    pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+    message: 'Please input valid number',
+    trigger: ['blur', 'change']
   }]
 });
 const resetForm = () => {
@@ -155,7 +160,7 @@ const handleResize = () => {
     popoverWidth.value = 300
   } else {
     dialogWidth.value = "60%"
-    popoverWidth.value = 600
+    popoverWidth.value = 700
   }
 }
 onMounted(() => {
@@ -438,7 +443,7 @@ const checkAdditional = (question) => {
           <el-form-item prop="application.course_ids" required>
             <template #label>
               {{ $t('title.class') }}
-              <el-popover placement="bottom" :width="300">
+              <el-popover placement="bottom" :width="popoverWidth">
                 <template #reference>
                   <el-icon><QuestionFilled /></el-icon>
                 </template>
@@ -554,8 +559,7 @@ const checkAdditional = (question) => {
             </el-form-item>
             <el-form-item
               prop="application.self_leave_phone_no"
-              :label="$t('application.emergencyPhone')"
-              :rules="rules.phone_no">
+              :label="$t('application.emergencyPhone')">
               <el-input v-model="applicationForm.application.self_leave_phone_no" />
             </el-form-item>
           </div>
