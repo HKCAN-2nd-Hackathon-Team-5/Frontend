@@ -33,7 +33,7 @@ const displayList = computed(() => {
   return studentList.value.filter(item => 
     item.first_name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
     item.last_name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-    item.phone_no.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.phone_no.toString().includes(searchInput.value.toLowerCase()) ||
     item.email.toLowerCase().includes(searchInput.value.toLowerCase())
   ).slice((currentPage.value-1)*10, currentPage.value*10)
 })

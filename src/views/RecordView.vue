@@ -8,7 +8,7 @@ const languageStore = useLanguageStore()
 
 const loading = ref(false)
 
-const filterOption = ref('name')
+const filterOption = ref('application')
 
 const recordList = ref([]);
 const refreshRecordList = () => {

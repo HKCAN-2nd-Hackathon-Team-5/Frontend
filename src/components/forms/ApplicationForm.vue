@@ -297,6 +297,13 @@ const checkAdditional = (question) => {
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center>
+    <el-steps :active="active" finish-status="success" align-center>
+      <el-step :title="$t('course.courseDetail')" />
+      <el-step :title="$t('student.personalInfo')" />
+      <el-step :title="$t('application.register')" />
+      <el-step :title="$t('application.consent')" />
+      <el-step :title="$t('application.review')" />
+    </el-steps>
     <el-container v-show="active === 0">
       <el-header>
         {{ courseDetail.title[languageStore.lang] }}
@@ -341,13 +348,6 @@ const checkAdditional = (question) => {
         </el-table>
       </el-main>
     </el-container>
-    <el-steps :active="active" finish-status="success" align-center>
-      <el-step :title="$t('course.courseDetail')" />
-      <el-step :title="$t('student.personalInfo')" />
-      <el-step :title="$t('application.register')" />
-      <el-step :title="$t('application.consent')" />
-      <el-step :title="$t('application.review')" />
-    </el-steps>
     <el-scrollbar ref="scroll" max-height="70vh">
       <el-form
         ref="ruleFormRef"
@@ -475,78 +475,65 @@ const checkAdditional = (question) => {
             v-show="checkAdditional(question)">
             <el-input type="textarea" v-model="applicationForm.application[`add_answers_${index+1}`]" />
           </el-form-item>
-          <el-form-item :label="$t('application.contactInfo')" >
-            <el-col :span="14">
-              <el-form-item
-                prop="application.parent_name"
-                :label="$t('application.parentName')"
-                required>
-                <el-input v-model="applicationForm.application.parent_name" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item
-                prop="application.parent_relation"
-                :label="$t('application.relationshipToStudent')"
-                required>
-                <el-select v-model="applicationForm.application.parent_relation">
-                  <el-option
-                    v-for="item in relationshipOptions"
-                    :key="item.value"
-                    :label="$t('application.'+item.label)"
-                    :value="item.value"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="14">
-              <el-form-item
-                prop="application.emergency_name"
-                :label="$t('application.emergencyName')"
-                required>
-                <el-input v-model="applicationForm.application.emergency_name" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item
-                prop="application.emergency_relation"
-                :label="$t('application.relationship')"
-                required>
-                <el-select v-model="applicationForm.application.emergency_relation">
-                  <el-option
-                    v-for="item in relationshipOptions"
-                    :key="item.value"
-                    :label="$t('application.'+item.label)"
-                    :value="item.value"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-form-item
-              prop="application.emergency_phone_no"
-              :label="$t('application.emergencyPhone')"
-              required>
-              <el-input v-model="applicationForm.application.emergency_phone_no" />
-            </el-form-item>
+          <el-form-item :label="$t('application.contactInfo')" />
+          <el-form-item
+            prop="application.parent_name"
+            :label="$t('application.parentName')"
+            required>
+            <el-input v-model="applicationForm.application.parent_name" />
+          </el-form-item>
+          <el-form-item
+            prop="application.parent_relation"
+            :label="$t('application.relationshipToStudent')"
+            required>
+            <el-select v-model="applicationForm.application.parent_relation">
+              <el-option
+                v-for="item in relationshipOptions"
+                :key="item.value"
+                :label="$t('application.'+item.label)"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            prop="application.emergency_name"
+            :label="$t('application.emergencyName')"
+            required>
+            <el-input v-model="applicationForm.application.emergency_name" />
+          </el-form-item>
+          <el-form-item
+            prop="application.emergency_relation"
+            :label="$t('application.relationship')"
+            required>
+            <el-select v-model="applicationForm.application.emergency_relation">
+              <el-option
+                v-for="item in relationshipOptions"
+                :key="item.value"
+                :label="$t('application.'+item.label)"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            prop="application.emergency_phone_no"
+            :label="$t('application.emergencyPhone')"
+            required>
+            <el-input v-model="applicationForm.application.emergency_phone_no" />
           </el-form-item>
           <el-form-item>
             <template #label>
               <div v-html="$t('application.pickUp')"></div>
             </template>
-            <el-col :span="14">
-              <el-form-item
-                prop="application.self_leave_name"
-                :label="$t('application.emergencyName')">
-                <el-input v-model="applicationForm.application.self_leave_name" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item
-                prop="application.self_leave_phone_no"
-                :label="$t('application.emergencyPhone')">
-                <el-input v-model="applicationForm.application.self_leave_phone_no" />
-              </el-form-item>
-            </el-col>
+          </el-form-item>
+          <el-form-item
+            prop="application.self_leave_name"
+            :label="$t('application.emergencyName')">
+            <el-input v-model="applicationForm.application.self_leave_name" />
+          </el-form-item>
+          <el-form-item
+            prop="application.self_leave_phone_no"
+            :label="$t('application.emergencyPhone')">
+            <el-input v-model="applicationForm.application.self_leave_phone_no" />
           </el-form-item>
           <el-form-item
             prop="application.residency_status"
@@ -787,16 +774,12 @@ const checkAdditional = (question) => {
             <template #label>
               <div v-html="$t('application.pickUp')"></div>
             </template>
-            <el-col :span="14">
-              <el-form-item :label="$t('application.emergencyName')">
-                <el-input v-model="applicationForm.application.self_leave_name" disabled/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item :label="$t('application.emergencyPhone')">
-                <el-input v-model="applicationForm.application.self_leave_phone_no" disabled />
-              </el-form-item>
-            </el-col>
+          </el-form-item>
+          <el-form-item :label="$t('application.emergencyName')">
+            <el-input v-model="applicationForm.application.self_leave_name" disabled/>
+          </el-form-item>
+          <el-form-item :label="$t('application.emergencyPhone')">
+            <el-input v-model="applicationForm.application.self_leave_phone_no" disabled />
           </el-form-item>
           <el-form-item :label="$t('application.residencyStatus')">
             <el-select v-model="applicationForm.application.residency_status" disabled>
@@ -827,18 +810,22 @@ const checkAdditional = (question) => {
           <el-form-item :label="$t('application.remarks')">
             <el-input v-model="applicationForm.application.remark" disabled/>
           </el-form-item>
-
-          <el-form-item>
-            <el-col :span="14">
-              <el-form-item :label="$t('application.emergencyName')">
-                <el-input v-model="applicationForm.application.consent_name" disabled/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item :label="$t('application.emergencyPhone')">
-                <el-input v-model="applicationForm.application.consent_phone_no" disabled />
-              </el-form-item>
-            </el-col>
+          <el-form-item :label="$t('application.consent')">
+            I give my permission for the use of photographs, films, slides, video taken during the program for the promotional purposes of the Centre for Immigrant and Community Services (CICS). I understand that there will not be any compensation for photographs or videos taken of the participant in the program.
+            <br>
+            I give permission to CICS to deliver agency information to my email address and understand I can withdraw my consent at any time.
+            <br>
+            Please read the Consent : <el-link href="https://bit.ly/CICSCentreforLearningConsentForm" target="_blank">https://bit.ly/CICSCentreforLearningConsentForm</el-link>
+            <br>
+            In case of emergency, I authorize CICS staff to administer first aid, or call an ambulance.  I understand that should such an emergency arise, I, or my emergency contact (when I cannot be reached), will be notified immediately.  I agree that any cost incurred for such services shall be my responsibility. 
+            <br>
+            By signing below, I have read and agree to the above.  By participating in the program, I release Centre for Immigrant and Community Services, its employees, and volunteers from any claims, actions, liabilities, losses and injuries to any person or property while participating in the program. 
+          </el-form-item>
+          <el-form-item :label="$t('application.emergencyName')">
+            <el-input v-model="applicationForm.application.consent_name" disabled/>
+          </el-form-item>
+          <el-form-item :label="$t('application.emergencyPhone')">
+            <el-input v-model="applicationForm.application.consent_phone_no" disabled />
           </el-form-item>
         </div>
         <!-- <el-form-item>
@@ -859,9 +846,14 @@ const checkAdditional = (question) => {
   </el-dialog>
 </template>
 
-<style>
+<style scoped>
 .application-steps {
   display: flex;
   justify-content: space-between;
+}
+
+:deep(.el-step__title) {
+  font-size: 12px;
+  line-height: 23px;
 }
 </style>

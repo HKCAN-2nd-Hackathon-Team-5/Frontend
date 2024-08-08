@@ -72,6 +72,11 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
 })
+
+const usernameRef = ref()
+const tryLogin = () => {
+  usernameRef.value.focus()
+}
 </script>
 
 <template>
@@ -124,23 +129,22 @@ onUnmounted(() => {
     direction="rtl"
     :size="drawerSize"
     @closed="cancelLogin"
+    @opened="tryLogin"
   >
-    <div>
-      <el-form label-width="auto" :model="loginForm">
-        <el-form-item label="User Name">
-          <el-input v-model="loginForm.username" />
-        </el-form-item>
-        <el-form-item label="Password">
-          <el-input type="password" v-model="loginForm.password" />
-        </el-form-item>
-      </el-form>
-      <div>
+    <el-form label-width="auto" :model="loginForm">
+      <el-form-item label="Username">
+        <el-input ref="usernameRef" v-model="loginForm.username" />
+      </el-form-item>
+      <el-form-item label="Password">
+        <el-input type="password" v-model="loginForm.password" show-password />
+      </el-form-item>
+      <el-form-item>
         <!-- <el-button @click="()=>loginDrawer=false">Cancel</el-button> -->
-        <el-button type="primary" @click="login" :loading="profileStore.isLoading">
+        <el-button type="primary" native-type="submit" @click="login" :loading="profileStore.isLoading">
           Log In
         </el-button>
-      </div>
-    </div>
+      </el-form-item>
+    </el-form>
   </el-drawer>
   </div>
 </template>
