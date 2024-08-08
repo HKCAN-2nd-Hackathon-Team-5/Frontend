@@ -180,12 +180,13 @@ onUnmounted(() => {
       label-position="top"
       ref="ruleFormRef"
       :model="courseForm"
-      label-width="auto">
+      label-width="auto"
+      scroll-to-error>
       <el-form-item :label="$t('course.courseTitle')" required />
       <multi-lang-input prop-name="title" v-model="courseForm.title" required/>
       <el-form-item :label="$t('course.description')" required />
       <multi-lang-input isTextarea prop-name="desc" v-model="courseForm.desc" required/>
-      <el-form-item :label="$t('course.startOpenDate')" required>
+      <el-form-item prop="start_date" :label="$t('course.startOpenDate')" required>
         <el-date-picker
           v-model="courseForm.start_date"
           type="date"
@@ -196,7 +197,7 @@ onUnmounted(() => {
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('course.endOpenDate')" required>
+      <el-form-item prop="end_date" :label="$t('course.endOpenDate')" required>
         <el-date-picker
           v-model="courseForm.end_date"
           type="date"
@@ -249,7 +250,7 @@ onUnmounted(() => {
           <el-table-column prop="price" :label="$t('class.price')" />
         </el-table>
       </el-form-item>
-      <el-form-item :label="$t('course.forKids')" required>
+      <el-form-item prop="is_kid_form" :label="$t('course.forKids')" required>
         <el-switch v-model="courseForm.is_kid_form" />
       </el-form-item>
       <el-form-item :label="$t('course.earlyBird')">
@@ -270,7 +271,7 @@ onUnmounted(() => {
           />
         </el-form-item>
       </el-form-item>
-      <el-form-item :label="$t('course.igDiscount')" required>
+      <el-form-item :label="$t('course.igDiscount')">
         <el-input-number
           v-model="courseForm.ig_discount"
           :min="0" />

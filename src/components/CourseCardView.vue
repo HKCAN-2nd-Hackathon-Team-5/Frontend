@@ -111,7 +111,7 @@ const closeForm = () => {
     justify-content: space-between;
   }
   .course-card {
-    width: 40vw;
+    width: 37vw;
   }
 }
 </style>

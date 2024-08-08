@@ -2,7 +2,7 @@
 import { ref, reactive, watch, onMounted, onUnmounted, nextTick } from 'vue';
 import { useLanguageStore } from '../../stores/language';
 import apis from '../../apis';
-import { More } from '@element-plus/icons-vue'
+import { QuestionFilled } from '@element-plus/icons-vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n';
 
@@ -341,7 +341,8 @@ const checkAdditional = (question) => {
         label-position="top"
         :model="recordForm"
         :rules="rules"
-        label-width="auto">
+        label-width="auto"
+        scroll-to-error>
         <el-form-item :label="$t('student.firstName')">
           <el-input v-model="recordForm.student.first_name" disabled />
         </el-form-item>
@@ -407,7 +408,7 @@ const checkAdditional = (question) => {
             {{ $t('title.class') }}
             <el-popover placement="right" :width="500">
               <template #reference>
-                <el-icon><More /></el-icon>
+                <el-icon><QuestionFilled /></el-icon>
               </template>
               <el-table :data="courseDetail.courses">
                 <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
@@ -515,29 +516,31 @@ const checkAdditional = (question) => {
             <el-input v-model="recordForm.self_leave_phone_no" disabled />
           </el-form-item>
         </div>
-        <el-form-item :label="$t('application.residencyStatus')">
-          <el-select v-model="recordForm.residency_status" disabled>
-            <el-option
-              v-for="item in residencyOptions"
-              :key="item.value"
-              :label="$t('application.'+item.label)"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('application.placeOfOrigin')">
-          <el-input v-model="recordForm.residency_origin" disabled/>
-        </el-form-item>
-        <el-form-item :label="$t('application.stayedYear')">
-          <el-select v-model="recordForm.residency_stay" disabled>
-            <el-option
-              v-for="item in residencyYearOptions"
-              :key="item.value"
-              :label="$t('application.'+item.label)"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
+        <div v-else>
+          <el-form-item :label="$t('application.residencyStatus')">
+            <el-select v-model="recordForm.residency_status" disabled>
+              <el-option
+                v-for="item in residencyOptions"
+                :key="item.value"
+                :label="$t('application.'+item.label)"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('application.placeOfOrigin')">
+            <el-input v-model="recordForm.residency_origin" disabled/>
+          </el-form-item>
+          <el-form-item :label="$t('application.stayedYear')">
+            <el-select v-model="recordForm.residency_stay" disabled>
+              <el-option
+                v-for="item in residencyYearOptions"
+                :key="item.value"
+                :label="$t('application.'+item.label)"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </div>
         <el-form-item :label="$t('application.igName')">
           <el-input v-model="recordForm.ig_username" disabled/>
         </el-form-item>

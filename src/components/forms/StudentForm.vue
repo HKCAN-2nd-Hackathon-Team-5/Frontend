@@ -135,14 +135,19 @@ const rules = reactive({
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center>
-    <el-form ref="ruleFormRef" :model="studentForm" :rules="rules" label-width="auto">
-      <el-form-item :label="$t('student.firstName')" required>
+    <el-form
+      ref="ruleFormRef"
+      :model="studentForm"
+      :rules="rules"
+      label-width="auto"
+      scroll-to-error>
+      <el-form-item prop="first_name" :label="$t('student.firstName')" required>
         <el-input v-model="studentForm.first_name" />
       </el-form-item>
-      <el-form-item :label="$t('student.lastName')" required>
+      <el-form-item prop="last_name" :label="$t('student.lastName')" required>
         <el-input v-model="studentForm.last_name" />
       </el-form-item>
-      <el-form-item :label="$t('student.gender')" required>
+      <el-form-item prop="gender" :label="$t('student.gender')" required>
         <el-select
           v-model="studentForm.gender"
         >
@@ -154,7 +159,7 @@ const rules = reactive({
           />
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('student.dob')" required>
+      <el-form-item prop="dob" :label="$t('student.dob')" required>
         <el-date-picker
           v-model="studentForm.dob"
           type="date"
@@ -171,16 +176,16 @@ const rules = reactive({
       <el-form-item :label="$t('student.email')" prop="EMAIL">
         <el-input v-model="studentForm.email" />
       </el-form-item>
-      <el-form-item :label="$t('student.address')" required>
+      <el-form-item prop="address" :label="$t('student.address')" required>
         <el-input v-model="studentForm.address" />
       </el-form-item>
-      <el-form-item :label="$t('student.city')" required>
+      <el-form-item prop="city" :label="$t('student.city')" required>
         <el-input v-model="studentForm.city" />
       </el-form-item>
       <el-form-item :label="$t('student.postal')" prop="POSTAL_CODE">
         <el-input v-model="studentForm.postal_code" />
       </el-form-item>
-      <el-form-item :label="$t('student.credit')" required>
+      <el-form-item prop="credit_balance" :label="$t('student.credit')" required>
         <el-input-number
           v-model="studentForm.credit_balance"
           :min="0" />

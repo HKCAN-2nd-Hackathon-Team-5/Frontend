@@ -2,7 +2,7 @@
 import { ref, reactive, watch, onMounted, onUnmounted, nextTick } from 'vue';
 import { useLanguageStore } from '../../stores/language';
 import apis from '../../apis';
-import { More } from '@element-plus/icons-vue'
+import { QuestionFilled } from '@element-plus/icons-vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n';
 
@@ -148,11 +148,14 @@ watch(() => props.isShow, (newVisible, oldVisible) => {
   }
 });
 const dialogWidth = ref("50%");
+const popoverWidth = ref(300)
 const handleResize = () => {
   if (window.innerWidth < 500) {
     dialogWidth.value = "90%"
+    popoverWidth.value = 300
   } else {
     dialogWidth.value = "60%"
+    popoverWidth.value = 600
   }
 }
 onMounted(() => {
@@ -297,22 +300,38 @@ const checkAdditional = (question) => {
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center>
-    <el-steps :active="active" finish-status="success" align-center>
-      <el-step :title="$t('course.courseDetail')" />
-      <el-step :title="$t('student.personalInfo')" />
-      <el-step :title="$t('application.register')" />
-      <el-step :title="$t('application.consent')" />
-      <el-step :title="$t('application.review')" />
-    </el-steps>
     <el-container v-show="active === 0">
-      <el-header>
+      <el-header height="30px">
+        <h3>
         {{ courseDetail.title[languageStore.lang] }}
+        </h3>
       </el-header>
       <el-main>
         <div>{{ courseDetail.desc[languageStore.lang] }}</div>
-        <div>{{ courseDetail.early_bird.end_date }}</div>
-        <div>{{ courseDetail.early_bird.discount }}</div>
-        <div>{{ courseDetail.ig_discount }}</div>
+        <el-row>
+          <el-col class="label" :span="5">
+            {{ $t('course.earlyBird') }} - {{ $t('course.endDate') }}
+          </el-col>
+          <el-col class="content" :span="10">
+            {{ courseDetail.early_bird.end_date }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col class="label" :span="5">
+            {{ $t('course.earlyBird') }} - {{ $t('course.discount') }}
+          </el-col>
+          <el-col class="content" :span="10">
+            ${{ courseDetail.early_bird.discount }}
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col class="label" :span="5">
+            {{ $t('course.igDiscount') }}
+          </el-col>
+          <el-col class="content" :span="10">
+            ${{ courseDetail.ig_discount  }}
+          </el-col>
+        </el-row>
         <el-table :data="courseDetail.courses">
           <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
           <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
@@ -355,7 +374,8 @@ const checkAdditional = (question) => {
         :model="applicationForm"
         :rules="rules"
         label-width="auto"
-        v-show="active !== 0">
+        v-show="active !== 0"
+        scroll-to-error>
         <div v-if="active === 1">
           <el-form-item prop="student.first_name" :label="$t('student.firstName')" required>
             <el-input v-model="applicationForm.student.first_name" />
@@ -420,7 +440,7 @@ const checkAdditional = (question) => {
               {{ $t('title.class') }}
               <el-popover placement="bottom" :width="300">
                 <template #reference>
-                  <el-icon><More /></el-icon>
+                  <el-icon><QuestionFilled /></el-icon>
                 </template>
                 <el-table :data="courseDetail.courses">
                   <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
@@ -539,38 +559,40 @@ const checkAdditional = (question) => {
               <el-input v-model="applicationForm.application.self_leave_phone_no" />
             </el-form-item>
           </div>
-          <el-form-item
-            prop="application.residency_status"
-            :label="$t('application.residencyStatus')"
-            required>
-            <el-select v-model="applicationForm.application.residency_status">
-              <el-option
-                v-for="item in residencyOptions"
-                :key="item.value"
-                :label="$t('application.'+item.label)"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            prop="application.residency_origin"
-            :label="$t('application.placeOfOrigin')"
-            required>
-            <el-input v-model="applicationForm.application.residency_origin" />
-          </el-form-item>
-          <el-form-item
-            prop="application.residency_stay"
-            :label="$t('application.stayedYear')"
-            required>
-            <el-select v-model="applicationForm.application.residency_stay">
-              <el-option
-                v-for="item in residencyYearOptions"
-                :key="item.value"
-                :label="$t('application.'+item.label)"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
+          <div v-else>
+            <el-form-item
+              prop="application.residency_status"
+              :label="$t('application.residencyStatus')"
+              required>
+              <el-select v-model="applicationForm.application.residency_status">
+                <el-option
+                  v-for="item in residencyOptions"
+                  :key="item.value"
+                  :label="$t('application.'+item.label)"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              prop="application.residency_origin"
+              :label="$t('application.placeOfOrigin')"
+              required>
+              <el-input v-model="applicationForm.application.residency_origin" />
+            </el-form-item>
+            <el-form-item
+              prop="application.residency_stay"
+              :label="$t('application.stayedYear')"
+              required>
+              <el-select v-model="applicationForm.application.residency_stay">
+                <el-option
+                  v-for="item in residencyYearOptions"
+                  :key="item.value"
+                  :label="$t('application.'+item.label)"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+          </div>
           <el-form-item
             prop="application.ig_username"
             :label="$t('application.igName')">
@@ -680,7 +702,7 @@ const checkAdditional = (question) => {
               {{ $t('title.class') }}
               <el-popover placement="right" :width="500">
                 <template #reference>
-                  <el-icon><More /></el-icon>
+                  <el-icon><QuestionFilled /></el-icon>
                 </template>
                 <el-table :data="courseDetail.courses">
                   <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
@@ -788,29 +810,31 @@ const checkAdditional = (question) => {
               <el-input v-model="applicationForm.application.self_leave_phone_no" disabled />
             </el-form-item>
           </div>
-          <el-form-item :label="$t('application.residencyStatus')">
-            <el-select v-model="applicationForm.application.residency_status" disabled>
-              <el-option
-                v-for="item in residencyOptions"
-                :key="item.value"
-                :label="$t('application.'+item.label)"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('application.placeOfOrigin')">
-            <el-input v-model="applicationForm.application.residency_origin" disabled/>
-          </el-form-item>
-          <el-form-item :label="$t('application.stayedYear')">
-            <el-select v-model="applicationForm.application.residency_stay" disabled>
-              <el-option
-                v-for="item in residencyYearOptions"
-                :key="item.value"
-                :label="$t('application.'+item.label)"
-                :value="item.value"
-              />
-            </el-select>
-          </el-form-item>
+          <div v-else>
+            <el-form-item :label="$t('application.residencyStatus')">
+              <el-select v-model="applicationForm.application.residency_status" disabled>
+                <el-option
+                  v-for="item in residencyOptions"
+                  :key="item.value"
+                  :label="$t('application.'+item.label)"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="$t('application.placeOfOrigin')">
+              <el-input v-model="applicationForm.application.residency_origin" disabled/>
+            </el-form-item>
+            <el-form-item :label="$t('application.stayedYear')">
+              <el-select v-model="applicationForm.application.residency_stay" disabled>
+                <el-option
+                  v-for="item in residencyYearOptions"
+                  :key="item.value"
+                  :label="$t('application.'+item.label)"
+                  :value="item.value"
+                />
+              </el-select>
+            </el-form-item>
+          </div>
           <el-form-item :label="$t('application.igName')">
             <el-input v-model="applicationForm.application.ig_username" disabled/>
           </el-form-item>
@@ -841,6 +865,13 @@ const checkAdditional = (question) => {
         </el-form-item> -->
       </el-form>
     </el-scrollbar>
+    <el-steps :active="active" finish-status="success" align-center>
+      <el-step :title="$t('course.courseDetail')" />
+      <el-step :title="$t('student.personalInfo')" />
+      <el-step :title="$t('application.register')" />
+      <el-step :title="$t('application.consent')" />
+      <el-step :title="$t('application.review')" />
+    </el-steps>
     <div class="application-steps">
       <el-button v-show="active>0" @click="back">{{ $t('application.back') }}</el-button>
       <span v-show="active===0"></span>
@@ -862,5 +893,9 @@ const checkAdditional = (question) => {
 :deep(.el-step__title) {
   font-size: 12px;
   line-height: 23px;
+}
+
+.label {
+  font-weight: 600;
 }
 </style>

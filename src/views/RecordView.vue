@@ -70,7 +70,7 @@ const closeForm = () => {
       <el-col :span="8">
         <el-input
           size="large"
-          :placeholder="`${$t('student.firstName')}/${$t('student.lastName')}/${$t('student.phone')}/${$t('student.email')}`"
+          :placeholder="`${$t('student.firstName')}/${$t('student.lastName')}/${$t('course.courseTitle')}`"
           v-model="searchInput">
           <template #prepend>
             <el-icon>

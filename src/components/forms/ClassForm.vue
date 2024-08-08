@@ -154,16 +154,17 @@ onUnmounted(() => {
       label-position="top"
       ref="ruleFormRef"
       :model="classForm"
-      label-width="auto">
+      label-width="auto"
+      scroll-to-error>
       <el-form-item :label="$t('class.className')" required />
-      <multi-lang-input prop-name="course_name" v-model="classForm.course_name" />
-      <el-form-item :label="$t('class.tutorName')" required>
+      <multi-lang-input prop-name="course_name" v-model="classForm.course_name" required/>
+      <el-form-item prop="tutor_name" :label="$t('class.tutorName')" required>
         <el-input v-model="classForm.tutor_name" />
       </el-form-item>
-      <el-form-item :label="$t('class.venue')" required>
+      <el-form-item prop="venue" :label="$t('class.venue')" required>
         <el-input v-model="classForm.venue" />
       </el-form-item>
-      <el-form-item :label="$t('class.startDate')" required>
+      <el-form-item prop="start_date" :label="$t('class.startDate')" required>
         <el-date-picker
           v-model="classForm.start_date"
           type="date"
@@ -174,7 +175,7 @@ onUnmounted(() => {
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('class.endDate')" required>
+      <el-form-item prop="end_date" :label="$t('class.endDate')" required>
         <el-date-picker
           v-model="classForm.end_date"
           type="date"
@@ -185,7 +186,7 @@ onUnmounted(() => {
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('class.weekday')" required>
+      <el-form-item prop="weekday" :label="$t('class.weekday')" required>
         <el-select
           v-model="classForm.weekday"
           multiple
@@ -210,7 +211,7 @@ onUnmounted(() => {
           :disabled-date="disabledDate"
         />
       </el-form-item>
-      <el-form-item :label="$t('class.startTime')" required>
+      <el-form-item prop="start_time" :label="$t('class.startTime')" required>
         <el-time-picker
           v-model="classForm.start_time"
           value-format="HH:mm:ss"
@@ -218,7 +219,7 @@ onUnmounted(() => {
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('class.endTime')" required>
+      <el-form-item prop="end_time" :label="$t('class.endTime')" required>
         <el-time-picker
           v-model="classForm.end_time"
           value-format="HH:mm:ss"
@@ -226,25 +227,25 @@ onUnmounted(() => {
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('class.capacity')" required>
+      <el-form-item prop="capacity" :label="$t('class.capacity')" required>
         <el-input-number
           v-model="classForm.capacity"
           :min="0" />
       </el-form-item>
-      <el-form-item :label="$t('class.price')" required>
+      <el-form-item prop="price" :label="$t('class.price')" required>
         <el-input v-model="classForm.price" />
       </el-form-item>
-      <el-form-item :label="$t('class.minAge')" required>
+      <el-form-item prop="age_min" :label="$t('class.minAge')" required>
         <el-input-number
           v-model="classForm.age_min"
           :min="0" />
       </el-form-item>
-      <el-form-item :label="$t('class.maxAge')" required>
+      <el-form-item prop="age_max" :label="$t('class.maxAge')" required>
         <el-input-number
           v-model="classForm.age_max"
           :min="0" />
       </el-form-item>
-      <el-form-item :label="$t('class.minAttendance')" required>
+      <el-form-item prop="min_attendance" :label="$t('class.minAttendance')" required>
         <el-input-number
           v-model="classForm.min_attendance"
           :min="0" />
