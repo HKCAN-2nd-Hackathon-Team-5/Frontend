@@ -181,12 +181,10 @@ onUnmounted(() => {
       ref="ruleFormRef"
       :model="courseForm"
       label-width="auto">
-      <el-form-item :label="$t('course.courseTitle')" required>
-        <multi-lang-input prop-name="title" v-model="courseForm.title" required/>
-      </el-form-item>
-      <el-form-item :label="$t('course.description')" required>
-        <multi-lang-input isTextarea prop-name="desc" v-model="courseForm.desc" required/>
-      </el-form-item>
+      <el-form-item :label="$t('course.courseTitle')" required />
+      <multi-lang-input prop-name="title" v-model="courseForm.title" required/>
+      <el-form-item :label="$t('course.description')" required />
+      <multi-lang-input isTextarea prop-name="desc" v-model="courseForm.desc" required/>
       <el-form-item :label="$t('course.startOpenDate')" required>
         <el-date-picker
           v-model="courseForm.start_date"

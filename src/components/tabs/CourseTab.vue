@@ -125,7 +125,11 @@ const closeForm = () => {
         {{ scope.row.start_date }} - {{ scope.row.end_date }}
       </template>
     </el-table-column>
-    <el-table-column prop="is_kid_form" :label="$t('course.forKids')" />
+    <el-table-column :label="$t('course.forKids')">
+      <template #default="scope">
+        {{ scope.row.is_kid_form ? 'Y' : 'N' }}
+      </template>
+    </el-table-column>
     <el-table-column :label="$t('course.earlyBird')">
       <el-table-column prop="early_bird.end_date" :label="$t('course.endDate')" />
       <el-table-column prop="early_bird.discount" :label="$t('course.discount')" />

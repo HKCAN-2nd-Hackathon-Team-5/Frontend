@@ -150,10 +150,13 @@ onUnmounted(() => {
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center>
-    <el-form ref="ruleFormRef" :model="classForm" label-width="auto">
-      <el-form-item :label="$t('class.className')" required>
-        <multi-lang-input prop-name="course_name" v-model="classForm.course_name" />
-      </el-form-item>
+    <el-form
+      label-position="top"
+      ref="ruleFormRef"
+      :model="classForm"
+      label-width="auto">
+      <el-form-item :label="$t('class.className')" required />
+      <multi-lang-input prop-name="course_name" v-model="classForm.course_name" />
       <el-form-item :label="$t('class.tutorName')" required>
         <el-input v-model="classForm.tutor_name" />
       </el-form-item>

@@ -54,6 +54,7 @@ const localization = {
   student: {
     personalInfo: '個人資料',
     addStudent: "新增學生",
+    studentName: '學生全名',
     firstName: '名',
     lastName: '姓',
     gender: '性別',
@@ -111,6 +112,10 @@ const localization = {
     igName: '如果您追蹤了 Center for Learning 的 IG，請寫下您的 IG 名稱，以獲取額外折扣。',
     remarks: '備註',
     payment: '付款方式<br>提交此報名表後，您將於 2 個工作天內收到由 PayPal 所發出的連結，以完成信用卡付款。 您不需要 PayPal 的帳戶。 請檢查您的垃圾郵件箱。'
+  },
+  record: {
+    price: '價錢',
+    submittedTime: '提交時間'
   }
 };
 

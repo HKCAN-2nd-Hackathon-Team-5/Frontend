@@ -54,6 +54,7 @@ const localization = {
   student: {
     personalInfo: 'Personal Information',
     addstudent: "Add Student",
+    studentName: 'Student Name',
     firstName: 'First Name',
     lastName: 'Last Name',
     gender: 'Gender',
@@ -111,6 +112,10 @@ const localization = {
     igName: 'Instagram name',
     remarks: 'Remarks',
     payment: 'Payment Method<br>Upon submission of this registration form, you will receive an invoice within 2 business days via PayPal to complete payment by credit card. A PayPal account is not required. Please check your Spam/Junk email folder.<br/><br/>Course fees are non-refundable. However, if the minimum number of participants are not reached, the course will be cancelled and the fee will be refund.'
+  },
+  record: {
+    price: 'Price',
+    submittedTime: 'Submitted Time'
   }
 };
 
