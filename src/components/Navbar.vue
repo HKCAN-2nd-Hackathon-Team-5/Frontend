@@ -60,7 +60,7 @@ const logout = () => {
 }
 const handleResize = () => {
   if (window.innerWidth < 500) {
-    drawerSize.value = "90%"
+    drawerSize.value = "100%"
   } else {
     drawerSize.value = "50%"
   }

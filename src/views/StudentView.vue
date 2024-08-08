@@ -1,9 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Plus } from '@element-plus/icons-vue'
+import { ref, onMounted, computed } from 'vue';
+import { Plus, Search } from '@element-plus/icons-vue'
 import apis from '../apis';
 import studentForm from '../components/forms/StudentForm.vue';
-import { useLanguageStore } from '../stores/language';
+// import { useLanguageStore } from '../stores/language';
+
+// const languageStore = useLanguageStore()
 
 const loading = ref(false)
 
@@ -25,9 +27,18 @@ onMounted(() => {
   refreshStudentList()
 })
 
-const currentPage = ref(1);
+const searchInput = ref('')
 
-const languageStore = useLanguageStore()
+const displayList = computed(() => {
+  return studentList.value.filter(item => 
+    item.first_name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.last_name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.phone_no.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.email.toLowerCase().includes(searchInput.value.toLowerCase())
+  ).slice((currentPage.value-1)*10, currentPage.value*10)
+})
+
+const currentPage = ref(1);
 
 const isAdding = ref(false);
 const isEditing = ref(false);
@@ -50,10 +61,24 @@ const closeForm = () => {
 
 <template>
   <div>
+    <el-row type="flex" justify="end">
+      <el-col :span="8">
+        <el-input
+          size="large"
+          :placeholder="`${$t('student.firstName')}/${$t('student.lastName')}/${$t('student.phone')}/${$t('student.email')}`"
+          v-model="searchInput">
+          <template #prepend>
+            <el-icon>
+              <Search />
+            </el-icon>
+          </template>
+        </el-input>
+      </el-col>
+    </el-row>
     <el-table
       v-loading="loading"
-      :data="studentList.slice((currentPage-1)*10, currentPage*10)"
-      max-height="55vh"
+      :data="displayList"
+      max-height="48vh"
       style="width: 100%"
       @row-click="editStudent">
       <el-table-column fixed prop="first_name" :label="$t('student.firstName')" />

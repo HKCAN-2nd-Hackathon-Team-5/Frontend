@@ -36,7 +36,7 @@ const langPackage = computed(() => {
 .router-view-style {
   margin: 0 3vw;
   background: white;
-  max-height: 65vh;
+  max-height: 70vh;
   overflow-y: auto;
 }
 </style>

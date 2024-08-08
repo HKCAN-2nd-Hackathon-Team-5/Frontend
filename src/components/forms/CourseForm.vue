@@ -4,6 +4,7 @@ import MultiLangInput from './MultiLangInput.vue';
 import apis from '../../apis';
 import { useLanguageStore } from '../../stores/language';
 
+const languageStore = useLanguageStore()
 const props = defineProps({
   form: Object,
   isShow: {
@@ -102,8 +103,6 @@ const handleCourseSelectionChange = (val) => {
   }
 }
 
-const languageStore = useLanguageStore()
-
 const ruleFormRef = ref()
 const submit = async (formEl) => {
   if (!formEl) return
@@ -172,11 +171,11 @@ onUnmounted(() => {
   <el-dialog
     :title="props.isNew ? $t('course.createCourse') : $t('course.courseDetail')"
     v-model="dialogVisible"
-    top="5vh"
     :width="dialogWidth"
     @closed="closeDialog"
     :close-on-click-modal="false"
-    :close-on-press-escape="false">
+    :close-on-press-escape="false"
+    align-center>
     <el-form
       label-position="top"
       ref="ruleFormRef"
@@ -188,7 +187,7 @@ onUnmounted(() => {
       <el-form-item :label="$t('course.description')" required>
         <multi-lang-input isTextarea prop-name="desc" v-model="courseForm.desc" required/>
       </el-form-item>
-      <el-form-item :label="$t('course.startDate')" required>
+      <el-form-item :label="$t('course.startOpenDate')" required>
         <el-date-picker
           v-model="courseForm.start_date"
           type="date"
@@ -199,7 +198,7 @@ onUnmounted(() => {
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('course.endDate')" required>
+      <el-form-item :label="$t('course.endOpenDate')" required>
         <el-date-picker
           v-model="courseForm.end_date"
           type="date"

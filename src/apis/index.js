@@ -106,4 +106,24 @@ export default {
       url: '/student/delete/'+id,
     })
   },
+
+  /* ----application---- */
+  getRecordList() {
+    return api({
+      method: 'GET',
+      url: '/application',
+    })
+  },
+  addApplication(body) {
+    return api({
+      method: 'POST',
+      url: '/application',
+      body: body,
+      username: 'cicspublic',
+      password: 'cicspublic'
+    })
+  },
+  editApplication(body) {
+
+  }
 }

@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { Plus } from '@element-plus/icons-vue'
+import { onMounted, ref, computed } from 'vue';
+import { Plus, Search } from '@element-plus/icons-vue'
 import ClassForm from '../forms/ClassForm.vue';
 import apis from '../../apis';
 import { useLanguageStore } from '../../stores/language';
+
+const languageStore = useLanguageStore()
 
 const loading = ref(false)
 const classList = ref([]);
@@ -24,9 +26,19 @@ onMounted(() => {
   refreshClassList()
 })
 
-const currentPage = ref(1);
+const searchInput = ref('')
 
-const languageStore = useLanguageStore()
+const displayList = computed(() => {
+  return classList.value.filter(item => 
+    item.course_name.en.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.course_name.zh_Hant.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.course_name.zh.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.tutor_name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.venue.toLowerCase().includes(searchInput.value.toLowerCase())
+  ).slice((currentPage.value-1)*10, currentPage.value*10)
+})
+
+const currentPage = ref(1);
 
 const isAdding = ref(false);
 const isEditing = ref(false);
@@ -48,10 +60,24 @@ const closeForm = () => {
 </script>
 
 <template>
+  <el-row type="flex" justify="end">
+    <el-col :span="8">
+      <el-input
+        size="large"
+        :placeholder="`${$t('class.className')}/${$t('class.tutorName')}/${$t('class.venue')}`"
+        v-model="searchInput">
+        <template #prepend>
+          <el-icon>
+            <Search />
+          </el-icon>
+        </template>
+      </el-input>
+    </el-col>
+  </el-row>
   <el-table
     v-loading="loading"
-    :data="classList.slice((currentPage-1)*10, currentPage*10)"
-    max-height="55vh"
+    :data="displayList"
+    max-height="48vh"
     style="width: 100%"
     @row-click="editClass">
     <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />

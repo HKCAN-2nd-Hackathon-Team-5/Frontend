@@ -145,11 +145,11 @@ onUnmounted(() => {
   <el-dialog
     :title="props.isNew ? $t('class.createClass') : $t('class.classDetail')"
     v-model="dialogVisible"
-    top="5vh"
     :width="dialogWidth"
     @closed="closeDialog"
     :close-on-click-modal="false"
-    :close-on-press-escape="false">
+    :close-on-press-escape="false"
+    align-center>
     <el-form ref="ruleFormRef" :model="classForm" label-width="auto">
       <el-form-item :label="$t('class.className')" required>
         <multi-lang-input prop-name="course_name" v-model="classForm.course_name" />

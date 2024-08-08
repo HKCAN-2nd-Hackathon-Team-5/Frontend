@@ -130,11 +130,11 @@ const rules = reactive({
   <el-dialog
     :title="props.isNew ? $t('student.addStudent') : $t('student.personalInfo')"
     v-model="dialogVisible"
-    top="5vh"
     :width="dialogWidth"
     @closed="closeDialog"
     :close-on-click-modal="false"
-    :close-on-press-escape="false">
+    :close-on-press-escape="false"
+    align-center>
     <el-form ref="ruleFormRef" :model="studentForm" :rules="rules" label-width="auto">
       <el-form-item :label="$t('student.firstName')" required>
         <el-input v-model="studentForm.first_name" />
