@@ -49,7 +49,7 @@ const updateStudent = async (formEl) => {
   })
 }
 const deleteStudent = () => {
-  apis.deleteStudent(classForm.value.student_id)
+  apis.deleteStudent(studentForm.value.student_id)
     .then(res => {
       closeDialog()
     })
