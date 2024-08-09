@@ -119,7 +119,7 @@ const sendInvoice = (applicationDetail) => {
           <el-button
             @click.stop="sendInvoice(scope.row)"
             :disabled="sendInvoiceButtondisabled(scope.row)">
-            Sent Invoice</el-button>
+            Send Invoice</el-button>
         </template>
       </el-table-column>
     </el-table>
