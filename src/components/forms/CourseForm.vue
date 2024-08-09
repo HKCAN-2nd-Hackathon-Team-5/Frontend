@@ -251,7 +251,7 @@ onUnmounted(() => {
           <el-table-column prop="price" :label="$t('class.price')" />
         </el-table>
       </el-form-item>
-      <el-form-item prop="is_kid_form" :label="$t('course.forKids')" required>
+      <el-form-item prop="is_kid_form" :label="$t('course.forKids')">
         <el-switch v-model="courseForm.is_kid_form" />
       </el-form-item>
       <el-form-item :label="$t('course.earlyBird')">
@@ -260,7 +260,7 @@ onUnmounted(() => {
             v-model="courseForm.early_bird.discount"
             :min="0" />
         </el-form-item>
-        <el-form-item :label="$t('course.endDate')">
+        <el-form-item prop="early_bird.end_date" :label="$t('course.endDate')" :required="courseForm.early_bird.discount>0">
           <el-date-picker
             v-model="courseForm.early_bird.end_date"
             type="date"
@@ -277,7 +277,7 @@ onUnmounted(() => {
           v-model="courseForm.ig_discount"
           :min="0" />
       </el-form-item>
-      <el-form-item :label="$t('course.alumniDiscount')">
+      <el-form-item :label="$t('course.returnDiscount')">
         <el-input-number
           v-model="courseForm.return_discount"
           :min="0" />

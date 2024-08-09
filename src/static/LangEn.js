@@ -28,7 +28,7 @@ const localization = {
     endDate: 'End Date',
     discount: 'Discount',
     igDiscount: 'Instagram Follower Discount',
-    alumniDiscount: 'Alumni Discount',
+    returnDiscount: 'Returning Student Discount',
     additionalQuestion: 'Additional Question',
   },
   class: {
