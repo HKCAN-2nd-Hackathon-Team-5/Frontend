@@ -337,7 +337,8 @@ const checkAdditional = (question) => {
             ${{ courseDetail.ig_discount  }}
           </el-col>
         </el-row>
-        <el-table :data="courseDetail.courses">
+        <el-table :data="courseDetail.courses"
+        max-height="48vh">
           <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
           <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
           <el-table-column prop="venue" :label="$t('class.venue')" />
@@ -447,7 +448,8 @@ const checkAdditional = (question) => {
                 <template #reference>
                   <el-icon><QuestionFilled /></el-icon>
                 </template>
-                <el-table :data="courseDetail.courses">
+                <el-table :data="courseDetail.courses" 
+                max-height="48vh">
                   <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
                   <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
                   <el-table-column prop="venue" :label="$t('class.venue')" />
