@@ -95,6 +95,8 @@ const localization = {
     relationship: '關係',
     emergencyPhone: '緊急聯絡電話',
     pickUp: "接送安排<br>In order to ensure participants' safety, parents or authorized adults must pick-up their child(ren) in the designated area.<br><br>If the participant is 14 years of age or older, please sign the following if you (parent/guardian) authorize the participant to leave the program by himself/herself. CICS will not be responsible for the participant's safety, once he/she leaves the centre.",
+    nameForConsent: '你的全名/緊急聯絡人',
+    phoneForConsent: '你的电话/緊急聯絡人電話',
     residencyStatus: '現時加拿大身份',
     visitor:'旅客',
     workPermit:'工作簽証',

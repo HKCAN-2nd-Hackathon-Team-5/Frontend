@@ -4,6 +4,8 @@ import { Plus, Search } from '@element-plus/icons-vue'
 import CourseForm from '../forms/CourseForm.vue';
 import apis from '../../apis';
 import { useLanguageStore } from '../../stores/language';
+import * as XLSX from 'xlsx';
+import { ElMessage } from "element-plus";
 
 const languageStore = useLanguageStore()
 
@@ -58,6 +60,35 @@ const closeForm = () => {
   isEditing.value = false;
   isAdding.value = false;
   refreshCourseList()
+}
+
+const exportCoursePaymentStatus = (courseDetail) => {
+  ElMessage('Exporting...')
+  apis.exportCoursePaymentStatus(courseDetail.form_id)
+  .then(res => res.json())
+  .then(json => {
+    let dataList = JSON.parse(JSON.stringify(json.data));
+    dataList = dataList.map((x)=> {
+      return {
+        'Student First name': x.student_first_name,
+        'Student Last Name': x.student_last_name,
+        'Phone No.': x.student_phone_no,
+        'Email': x.student_email,
+        'Payment Invoice No.': x.payment_invoice_no,
+        'Payment Status': x.payment_status
+      };
+    });
+    
+    let ws = XLSX.utils.json_to_sheet(dataList);
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "sheet");
+    let buf = XLSX.write(wb, {bookType:'xlsx', type:'buffer'}); // generate a nodejs buffer
+    let str = XLSX.write(wb, {bookType:'xlsx', type:'binary'}); // generate a binary string in web browser
+    XLSX.writeFile(wb, `${courseDetail.title.en}_Participant_List.xlsx`);
+  })
+  .catch(err=>{
+    ElMessage.error('Try again')
+  })
 }
 </script>
 
@@ -135,6 +166,11 @@ const closeForm = () => {
       <el-table-column prop="early_bird.discount" :label="$t('course.discount')" />
     </el-table-column>
     <el-table-column prop="ig_discount" :label="$t('course.igDiscount')" />
+    <el-table-column fixed="right" :width="180">
+      <template #default="scope">
+        <el-button size="small" @click.stop="exportCoursePaymentStatus(scope.row)">Export Payment Status</el-button>
+      </template>
+    </el-table-column>
   </el-table>
   <el-pagination
     background

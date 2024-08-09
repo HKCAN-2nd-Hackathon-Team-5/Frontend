@@ -57,6 +57,12 @@ export default {
       url: '/form/delete/'+id,
     })
   },
+  exportCoursePaymentStatus(id) {
+    return api({
+      method: 'GET',
+      url: '/form/'+id+'/student-payment',
+    })
+  },
   
   /* ----class---- */
   getClassList() {
@@ -83,6 +89,12 @@ export default {
     return api({
       method: 'DELETE',
       url: '/course/delete/'+id,
+    })
+  },
+  exportClassPaidStudent(id) {
+    return api({
+      method: 'GET',
+      url: '/course/'+id+'/paid-student',
     })
   },
 
@@ -125,5 +137,13 @@ export default {
   },
   editApplication(body) {
 
-  }
+  },
+
+  /* ----payment---- */
+  sendInvoice(id) {
+    return api({
+      method: 'POST',
+      url: '/payment/create/'+id,
+    })
+  },
 }

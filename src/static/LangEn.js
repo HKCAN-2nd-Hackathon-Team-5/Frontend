@@ -95,6 +95,8 @@ const localization = {
     relationship: 'Relationship',
     emergencyPhone: 'Emergency Contact Phone',
     pickUp: "Pick Up Arrangements<br>In order to ensure participants' safety, parents or authorized adults must pick-up their child(ren) in the designated area.<br><br>If the participant is 14 years of age or older, please sign the following if you (parent/guardian) authorize the participant to leave the program by himself/herself. CICS will not be responsible for the participant's safety, once he/she leaves the centre.",
+    nameForConsent: 'Full Name/Emergency Contact Name',
+    phoneForConsent: 'Your Phone/Emergency Contact Phone',
     residencyStatus: 'Residency Status',
     visitor:'Visitor',
     workPermit:'Work Permit',

@@ -620,24 +620,18 @@ const checkAdditional = (question) => {
             <br>
             By signing below, I have read and agree to the above.  By participating in the program, I release Centre for Immigrant and Community Services, its employees, and volunteers from any claims, actions, liabilities, losses and injuries to any person or property while participating in the program. 
           </el-form-item>
-          <el-form-item>
-            <el-col :span="14">
-              <el-form-item
-                prop="application.consent_name"
-                :label="$t('application.emergencyName')"
-                required>
-                <el-input v-model="applicationForm.application.consent_name" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item
-                prop="application.consent_phone_no"
-                :label="$t('application.emergencyPhone')"
-                required
-                :rules="rules.phone_no">
-                <el-input v-model="applicationForm.application.consent_phone_no" />
-              </el-form-item>
-            </el-col>
+          <el-form-item
+            prop="application.consent_name"
+            :label="$t('application.nameForConsent')"
+            required>
+            <el-input v-model="applicationForm.application.consent_name" />
+          </el-form-item>
+          <el-form-item
+            prop="application.consent_phone_no"
+            :label="$t('application.phoneForConsent')"
+            required
+            :rules="rules.phone_no">
+            <el-input v-model="applicationForm.application.consent_phone_no" />
           </el-form-item>
         </div>
         <div v-else>
@@ -701,48 +695,7 @@ const checkAdditional = (question) => {
             <el-input type="textarea" v-model="applicationForm.application.special" disabled/>
           </el-form-item>
 
-          <el-form-item>
-            <template #label>
-              {{ $t('title.class') }}
-              <el-popover placement="right" :width="500">
-                <template #reference>
-                  <el-icon><QuestionFilled /></el-icon>
-                </template>
-                <el-table :data="courseDetail.courses">
-                  <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
-                  <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
-                  <el-table-column prop="venue" :label="$t('class.venue')" />
-                  <el-table-column :label="$t('class.date')">
-                    <template #default="scope">
-                      {{ scope.row.start_date }} - {{ scope.row.end_date }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column :label="$t('class.weekday')">
-                    <template #default="scope">
-                      {{ scope.row.weekday.toString() }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column :label="$t('class.exceptedDate')">
-                    <template #default="scope">
-                      {{ scope.row.except_date?.toString() }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column :label="$t('class.time')">
-                    <template #default="scope">
-                      {{ scope.row.start_time }} - {{ scope.row.end_time }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="min_attendance" :label="$t('class.minAttendance')" />
-                  <el-table-column prop="capacity" :label="$t('class.capacity')" />
-                  <el-table-column :label="$t('class.age')">
-                    <template #default="scope">
-                      {{ scope.row.age_min }} - {{ scope.row.age_max }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="price" :label="$t('class.price')" />
-                </el-table>
-              </el-popover>
-            </template>
+          <el-form-item :label="$t('title.class')">
             <el-select
               v-model="applicationForm.application.course_ids"
               multiple
@@ -856,10 +809,10 @@ const checkAdditional = (question) => {
             <br>
             By signing below, I have read and agree to the above.  By participating in the program, I release Centre for Immigrant and Community Services, its employees, and volunteers from any claims, actions, liabilities, losses and injuries to any person or property while participating in the program. 
           </el-form-item>
-          <el-form-item :label="$t('application.emergencyName')">
+          <el-form-item :label="$t('application.nameForConsent')">
             <el-input v-model="applicationForm.application.consent_name" disabled/>
           </el-form-item>
-          <el-form-item :label="$t('application.emergencyPhone')">
+          <el-form-item :label="$t('application.phoneForConsent')">
             <el-input v-model="applicationForm.application.consent_phone_no" disabled />
           </el-form-item>
         </div>

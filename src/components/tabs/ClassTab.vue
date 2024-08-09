@@ -4,6 +4,8 @@ import { Plus, Search } from '@element-plus/icons-vue'
 import ClassForm from '../forms/ClassForm.vue';
 import apis from '../../apis';
 import { useLanguageStore } from '../../stores/language';
+import * as XLSX from 'xlsx';
+import { ElMessage } from "element-plus";
 
 const languageStore = useLanguageStore()
 
@@ -57,6 +59,37 @@ const closeForm = () => {
   isAdding.value = false;
   refreshClassList()
 }
+
+const exportClassPaidStudent = (classDetail) => {
+  ElMessage('Exporting...')
+  apis.exportClassPaidStudent(classDetail.course_id)
+  .then(res => res.json())
+  .then(json => {
+    let dataList = JSON.parse(JSON.stringify(json.students));
+    dataList = dataList.map((x)=> {
+      return {
+        'Student First name': x.first_name,
+        'Student Last Name': x.last_name,
+        'Gender': x.gender,
+        'Date of Birth': x.dob,
+        'Address': x.address,
+        'City': x.city,
+        'Postal Code': x.postal_code,
+        'Phone No.': x.phone_no,
+        'Email': x.email
+      };
+    });
+    let ws = XLSX.utils.json_to_sheet(dataList);
+    let wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "sheet");
+    let buf = XLSX.write(wb, {bookType:'xlsx', type:'buffer'}); // generate a nodejs buffer
+    let str = XLSX.write(wb, {bookType:'xlsx', type:'binary'}); // generate a binary string in web browser
+    XLSX.writeFile(wb, `${classDetail.course_name.en}_Participant_List.xlsx`);
+  })
+  .catch(err=>{
+    ElMessage.error('Try again')
+  })
+}
 </script>
 
 <template>
@@ -79,8 +112,9 @@ const closeForm = () => {
     :data="displayList"
     max-height="48vh"
     style="width: 100%"
+    table-layout="auto"
     @row-click="editClass">
-    <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
+    <el-table-column fixed :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
     <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
     <el-table-column prop="venue" :label="$t('class.venue')" />
     <el-table-column :label="$t('class.date')">
@@ -111,6 +145,11 @@ const closeForm = () => {
       </template>
     </el-table-column>
     <el-table-column prop="price" :label="$t('class.price')" />
+    <el-table-column fixed="right" :width="170">
+      <template #default="scope">
+        <el-button size="small" @click.stop="exportClassPaidStudent(scope.row)">Export Participant List</el-button>
+      </template>
+    </el-table-column>
   </el-table>
   <el-pagination
     background

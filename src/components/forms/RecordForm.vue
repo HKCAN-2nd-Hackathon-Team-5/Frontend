@@ -174,6 +174,20 @@ const submit = async () => {
   })
 }
 
+const classList = ref([])
+const refreshClassList = () => {
+  // loading.value = true;
+  apis.getClassList()
+  .then(res => res.json())
+  .then(json => {
+    classList.value = json.courses
+    // loading.value = false
+  })
+  .catch(err => {
+    console.log(err)
+    // loading.value = false
+  })
+}
 const dialogVisible = ref(false);
 const closeDialog = ()=>{
   emit('closeDialog');
@@ -183,6 +197,7 @@ watch(() => props.isShow, (newVisible, oldVisible) => {
   resetForm()
   if (dialogVisible.value) {
     recordForm.value = JSON.parse(JSON.stringify(props.form));
+    refreshClassList()
   }
 });
 const dialogWidth = ref("50%");
@@ -403,14 +418,14 @@ const checkAdditional = (question) => {
           <el-input type="textarea" v-model="recordForm.special" disabled/>
         </el-form-item>
 
-        <!-- <el-form-item>
+        <el-form-item>
           <template #label>
             {{ $t('title.class') }}
-            <el-popover placement="right" :width="500">
+            <el-popover placement="right" :width="700">
               <template #reference>
                 <el-icon><QuestionFilled /></el-icon>
               </template>
-              <el-table :data="courseDetail.courses">
+              <el-table :data="classList" max-height="48vh">
                 <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
                 <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
                 <el-table-column prop="venue" :label="$t('class.venue')" />
@@ -446,18 +461,18 @@ const checkAdditional = (question) => {
             </el-popover>
           </template>
           <el-select
-            v-model="recordForm.application.course_ids"
+            v-model="recordForm.course_ids"
             multiple
             disabled
           >
             <el-option
-              v-for="item in courseDetail.courses"
+              v-for="item in classList"
               :key="item.course_id"
               :label="item.course_name[languageStore.lang]"
               :value="item.course_id"
             />
           </el-select>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item
           v-for="(question, key, index) in recordForm.form?.add_questions"
           :label="question[languageStore.lang]"
@@ -546,6 +561,13 @@ const checkAdditional = (question) => {
         </el-form-item>
         <el-form-item :label="$t('application.remarks')">
           <el-input v-model="recordForm.remark" disabled/>
+        </el-form-item>
+
+        <el-form-item label="Total Price">
+          <el-input v-model="recordForm.price" disabled/>
+        </el-form-item>
+        <el-form-item label="Used Credit">
+          <el-input v-model="recordForm.used_credit" disabled/>
         </el-form-item>
       </el-form>
     </el-scrollbar>

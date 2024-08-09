@@ -4,6 +4,7 @@ import { Plus, Search } from '@element-plus/icons-vue'
 import apis from '../apis';
 import { useLanguageStore } from '../stores/language';
 import RecordForm from '../components/forms/RecordForm.vue';
+import { ElMessage } from "element-plus";
 
 const languageStore = useLanguageStore()
 
@@ -55,6 +56,24 @@ const closeForm = () => {
   isEditing.value = false;
   refreshRecordList()
 }
+
+const sendInvoiceButtondisabled = (applicationDetail) => {
+ return Object.keys(applicationDetail.payment).length > 0;
+}
+const sendInvoice = (applicationDetail) => {
+  ElMessage('Send Invoice now...')
+  apis.sendInvoice(applicationDetail.application_id)
+  .then(res => {
+    if (res.status === 200) {
+      refreshRecordList()
+    } else {
+      ElMessage.error('Try again')
+    }
+  })
+  .catch(err=>{
+    ElMessage.error('Try again')
+  })
+}
 </script>
 
 <template>
@@ -95,6 +114,14 @@ const closeForm = () => {
       <el-table-column :prop="'form.title.'+languageStore.lang" :label="$t('course.courseTitle')" />
       <el-table-column prop="price" :label="$t('record.price')" />
       <el-table-column prop="submit_time" :label="$t('record.submittedTime')" />
+      <el-table-column>
+        <template #default="scope">
+          <el-button
+            @click.stop="sendInvoice(scope.row)"
+            :disabled="sendInvoiceButtondisabled(scope.row)">
+            Sent Invoice</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       background
