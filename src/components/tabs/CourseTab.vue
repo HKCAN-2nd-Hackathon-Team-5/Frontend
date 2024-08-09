@@ -166,6 +166,7 @@ const exportCoursePaymentStatus = (courseDetail) => {
       <el-table-column prop="early_bird.discount" :label="$t('course.discount')" />
     </el-table-column>
     <el-table-column prop="ig_discount" :label="$t('course.igDiscount')" />
+    <el-table-column prop="return_discount" :label="$t('course.alumniDiscount')" />
     <el-table-column fixed="right" :width="180">
       <template #default="scope">
         <el-button size="small" @click.stop="exportCoursePaymentStatus(scope.row)">Export Payment Status</el-button>

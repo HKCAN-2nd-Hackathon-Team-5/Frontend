@@ -42,6 +42,7 @@ const resetForm = () => {
       end_date: ''
     },
     ig_discount: 0,
+    return_discount: 0,
     add_questions: {
       q1: {
         en: "",
@@ -274,6 +275,11 @@ onUnmounted(() => {
       <el-form-item :label="$t('course.igDiscount')">
         <el-input-number
           v-model="courseForm.ig_discount"
+          :min="0" />
+      </el-form-item>
+      <el-form-item :label="$t('course.alumniDiscount')">
+        <el-input-number
+          v-model="courseForm.return_discount"
           :min="0" />
       </el-form-item>
       <el-form-item :label="$t('course.additionalQuestion')">

@@ -28,6 +28,7 @@ const localization = {
     endDate: '完结日期',
     discount: '折扣',
     igDiscount: 'Instagram粉丝折扣',
+    alumniDiscount: '旧生折扣',
     additionalQuestion: '附加问题'
   },
   class: {
