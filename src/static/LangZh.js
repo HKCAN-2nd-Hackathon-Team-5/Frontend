@@ -8,6 +8,9 @@ const localization = {
   },
   operation: {
     adminLogin: '管理员登录',
+    username: '用户名',
+    password: '密码',
+    login: '登录',
     logout: '退出',
     update: '更新',
     delete: '删除',
@@ -119,6 +122,67 @@ const localization = {
   record: {
     price: '价​钱​',
     submittedTime: '提交时间'
+  },
+  formRule: {
+    course: {
+      title: '课程标题必须以三种语言输入。',
+      description: '课程描述必须以三种语言输入。',
+      startOpenDate: '请选择开放报名开始日期。',
+      endOpenDate: '请选择开放报名结束日期。',
+      validEarlyBird: '早鸟优惠折扣必须为数字。',
+      earlyBirdEndDate: '如早鸟优惠折扣不为＄0，完结日期必须提供。',
+      validIgDiscount: 'Instagram粉丝折扣必须为数字。',
+      validReturnDiscount: '旧生优惠必须为数字。',
+    },
+    class: {
+      className: '兴趣班名称必须以三种语言输入。',
+      tutorName: '请输入导师名称。',
+      venue: '请输入地点。',
+      startDate: '请选择开始日期。',
+      endDate: '请选择完结日期。',
+      weekday: '请选择至少一天。',
+      startTime: '请选择开始时间。',
+      endTime: '请选择完结时间。',
+      capacity: '人数不可为空。',
+      validCapacity: '人数必须为数字。',
+      price: '费用不可为空。',
+      validPrice: '费用必须为数字。',
+      maxAge: '年龄上限不可为空。',
+      validMaxAge: '年龄上限必须为数字。',
+      minAge: '年龄下限不可为空。',
+      validMinAge: '年龄下限必须为数字。',
+      minAttendance: '最少出席日数不可为空。',
+      validMinAttendance: '最少出席日数必须为数字。',
+    },  
+    student: {
+      firstName: '请输入名字。',
+      lastName: '请输入姓氏。',
+      gender: '请选择性别。',
+      dob: '请选择出生日期。',
+      phone: '请输入电话号码。',
+      validPhone: '请输入正确格式的电话号码。',
+      email: '请输入电子邮件地址。',
+      validEmail: '请输入正确格式的电子邮件地址。',
+      address: '请输入地址。',
+      city: '请选择现居城市。',
+      postal: '请输入邮政编码。',
+      validPostal: '请输入正确格式的邮政编码。',
+      credit: '余额不可为空。',
+      validCredit: '余额必须为数字。',
+    },
+    application: {
+      class: '请选择至少一个兴趣班。',
+      classAge: '超出一兴趣班年龄限制：',
+      parentName: "请输入家长/监护人全名。",
+      relationshipToStudent: '请选择与学生的关系。',
+      emergencyName: '请输入紧急联系人姓名。',
+      emergencyPhone: '',
+      validEmergencyPhone: '',
+      residencyStatus: '请选择现时加拿大身份。',
+      placeOfOrigin: '请输入原居地。',
+      stayedYear: '请选择代表在加居住年期的选项。',
+      nameForConsent: '请输入一个名字以表示同意。'
+    }
   }
 };
 

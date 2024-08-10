@@ -1,10 +1,11 @@
 <script setup>
-import { ref, reactive, watch, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, reactive, watch, onMounted, onUnmounted, nextTick, computed } from 'vue';
 import { useLanguageStore } from '../../stores/language';
 import apis from '../../apis';
 import { QuestionFilled } from '@element-plus/icons-vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n';
+import { DateTime } from 'luxon'
 
 const languageStore = useLanguageStore()
 const { t } = useI18n()
@@ -39,34 +40,121 @@ const courseDetail = ref({})
 
 const applicationForm = ref({});
 const ruleFormRef = ref()
-const rules = reactive({
+const rules = computed(() => ({
+  'student.first_name': [{
+    required: true,
+    message: t('formRule.student.firstName'),
+    trigger: 'blur'
+  }],
+  'student.last_name': [{
+    required: true,
+    message: t('formRule.student.lastName'),
+    trigger: 'blur'
+  }],
+  'student.gender': [{
+    required: true,
+    message: t('formRule.student.gender'),
+    trigger: 'change'
+  }],
+  'student.dob': [{
+    required: true,
+    message: t('formRule.student.dob'),
+    trigger: 'change'
+  }],
   phone_no: [{
     required: true,
-    message: 'Please input phone number',
-    trigger: 'change'
+    message: t('formRule.student.phone'),
+    trigger: 'blur'
   }, {
     pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-    message: 'Please input valid number',
-    trigger: ['blur', 'change']
+    message: t('formRule.student.validPhone'),
+    trigger: 'change'
   }],
   'student.email': [{
-    type: 'email',
     required: true,
-    message: 'Please input a valid email address',
+    message: t('formRule.student.email'),
+    trigger: 'blur'
+  }, {
+    type: 'email',
+    message: t('formRule.student.validEmail'),
     trigger: 'change',
   },],
+  'student.address': [{
+    required: true,
+    message: t('formRule.student.address'),
+    trigger: 'blur'
+  }],
+  'student.city': [{
+    required: true,
+    message: t('formRule.student.city'),
+    trigger: 'change'
+  }],
   'student.postal_code': [{
     required: true,
+    message: t('formRule.student.postal'),
+    trigger: 'blur'
+  }, {
     pattern: /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/,
-    message: 'Please input valid postal code',
-    trigger: ['blur', 'change']
+    message: t('formRule.student.validPostal'),
+    trigger: 'change'
+  }],
+  'application.course_ids': [{
+    validator: checkClassAvailability,
+    trigger: 'change'
+  }],
+  'application.parent_name': [{
+    required: true,
+    message: t('formRule.application.parentName'),
+    trigger: 'blur'
+  }],
+  relation: [{
+    required: true,
+    message: t('formRule.application.relationshipToStudent'),
+    trigger: 'change'
+  }],
+  'application.emergency_name': [{
+    required: true,
+    message: t('formRule.application.emergencyName'),
+    trigger: 'blur'
   }],
   'application.self_leave_phone_no': [{
     pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-    message: 'Please input valid number',
-    trigger: ['blur', 'change']
+    message: t('formRule.student.validPhone'),
+    trigger: 'change'
+  }],
+  'application.residency_status': [{
+    required: true,
+    message: t('formRule.application.residencyStatus'),
+    trigger: 'change'
+  }],
+  'application.residency_origin': [{
+    required: true,
+    message: t('formRule.application.placeOfOrigin'),
+    trigger: 'blur'
+  }],
+  'application.residency_stay': [{
+    required: true,
+    message: t('formRule.application.stayedYear'),
+    trigger: 'change'
+  }],
+  "application.consent_name": [{
+    required: true,
+    message: t('formRule.application.nameForConsent'),
+    trigger: 'blur'
   }]
-});
+}));
+const checkClassAvailability = (rule, value, callback) => {
+  if (value.length === 0) {
+    return callback(new Error(t('formRule.application.class')))
+  }
+  value.forEach(item => {
+    let classItem = courseDetail.value.courses.find((ele)=>ele.course_id===item)
+    let age = DateTime.now().diff(DateTime.fromISO(applicationForm.value.student.dob), 'years').toObject().years
+    if (age < classItem.age_min || age > classItem.age_max) {
+      callback(new Error(`${t('formRule.application.classAge')}${classItem.course_name[languageStore.lang]}`))
+    }
+  })
+}
 const resetForm = () => {
   applicationForm.value = {
     student: {
@@ -314,7 +402,7 @@ const checkAdditional = (question) => {
       <el-main>
         <div>{{ courseDetail.desc[languageStore.lang] }}</div>
         <el-row>
-          <el-col class="label" :span="5">
+          <el-col class="label" :span="8">
             {{ $t('course.earlyBird') }} - {{ $t('course.endDate') }}
           </el-col>
           <el-col class="content" :span="10">
@@ -322,7 +410,7 @@ const checkAdditional = (question) => {
           </el-col>
         </el-row>
         <el-row>
-          <el-col class="label" :span="5">
+          <el-col class="label" :span="8">
             {{ $t('course.earlyBird') }} - {{ $t('course.discount') }}
           </el-col>
           <el-col class="content" :span="10">
@@ -330,7 +418,7 @@ const checkAdditional = (question) => {
           </el-col>
         </el-row>
         <el-row>
-          <el-col class="label" :span="5">
+          <el-col class="label" :span="8">
             {{ $t('course.igDiscount') }}
           </el-col>
           <el-col class="content" :span="10">
@@ -383,13 +471,13 @@ const checkAdditional = (question) => {
         v-show="active !== 0"
         scroll-to-error>
         <div v-if="active === 1">
-          <el-form-item prop="student.first_name" :label="$t('student.firstName')" required>
+          <el-form-item prop="student.first_name" :label="$t('student.firstName')">
             <el-input v-model="applicationForm.student.first_name" />
           </el-form-item>
-          <el-form-item prop="student.last_name" :label="$t('student.lastName')" required>
+          <el-form-item prop="student.last_name" :label="$t('student.lastName')">
             <el-input v-model="applicationForm.student.last_name" />
           </el-form-item>
-          <el-form-item prop="student.gender" :label="$t('student.gender')" required>
+          <el-form-item prop="student.gender" :label="$t('student.gender')">
             <el-select
               v-model="applicationForm.student.gender"
             >
@@ -401,7 +489,7 @@ const checkAdditional = (question) => {
               />
             </el-select>
           </el-form-item>
-          <el-form-item prop="student.dob" :label="$t('student.dob')" required>
+          <el-form-item prop="student.dob" :label="$t('student.dob')">
             <el-date-picker
               v-model="applicationForm.student.dob"
               type="date"
@@ -418,10 +506,10 @@ const checkAdditional = (question) => {
           <el-form-item prop="student.email" :label="$t('student.email')">
             <el-input v-model="applicationForm.student.email" />
           </el-form-item>
-          <el-form-item prop="student.address" :label="$t('student.address')" required>
+          <el-form-item prop="student.address" :label="$t('student.address')">
             <el-input v-model="applicationForm.student.address" />
           </el-form-item>
-          <el-form-item prop="student.city" :label="$t('student.city')" required>
+          <el-form-item prop="student.city" :label="$t('student.city')">
             <el-select
               v-model="applicationForm.student.city"
             >
@@ -433,7 +521,7 @@ const checkAdditional = (question) => {
               />
             </el-select>
           </el-form-item>
-          <el-form-item prop="student.postal_code" :label="$t('student.postal')" required>
+          <el-form-item prop="student.postal_code" :label="$t('student.postal')">
             <el-input v-model="applicationForm.student.postal_code" />
           </el-form-item>
           <el-form-item prop="application.special" :label="$t('application.special')">
@@ -506,14 +594,13 @@ const checkAdditional = (question) => {
             <el-form-item :label="$t('application.contactInfo')" />
             <el-form-item
               prop="application.parent_name"
-              :label="$t('application.parentName')"
-              required>
+              :label="$t('application.parentName')">
               <el-input v-model="applicationForm.application.parent_name" />
             </el-form-item>
             <el-form-item
               prop="application.parent_relation"
               :label="$t('application.relationshipToStudent')"
-              required>
+              :rules="rules.relation">
               <el-select v-model="applicationForm.application.parent_relation">
                 <el-option
                   v-for="item in relationshipOptions"
@@ -525,14 +612,13 @@ const checkAdditional = (question) => {
             </el-form-item>
             <el-form-item
               prop="application.emergency_name"
-              :label="$t('application.emergencyName')"
-              required>
+              :label="$t('application.emergencyName')">
               <el-input v-model="applicationForm.application.emergency_name" />
             </el-form-item>
             <el-form-item
               prop="application.emergency_relation"
               :label="$t('application.relationship')"
-              required>
+              :rules="rules.relation">
               <el-select v-model="applicationForm.application.emergency_relation">
                 <el-option
                   v-for="item in relationshipOptions"
@@ -545,7 +631,6 @@ const checkAdditional = (question) => {
             <el-form-item
               prop="application.emergency_phone_no"
               :label="$t('application.emergencyPhone')"
-              required
               :rules="rules.phone_no">
               <el-input v-model="applicationForm.application.emergency_phone_no" />
             </el-form-item>
@@ -568,8 +653,7 @@ const checkAdditional = (question) => {
           <div v-else>
             <el-form-item
               prop="application.residency_status"
-              :label="$t('application.residencyStatus')"
-              required>
+              :label="$t('application.residencyStatus')">
               <el-select v-model="applicationForm.application.residency_status">
                 <el-option
                   v-for="item in residencyOptions"
@@ -581,14 +665,12 @@ const checkAdditional = (question) => {
             </el-form-item>
             <el-form-item
               prop="application.residency_origin"
-              :label="$t('application.placeOfOrigin')"
-              required>
+              :label="$t('application.placeOfOrigin')">
               <el-input v-model="applicationForm.application.residency_origin" />
             </el-form-item>
             <el-form-item
               prop="application.residency_stay"
-              :label="$t('application.stayedYear')"
-              required>
+              :label="$t('application.stayedYear')">
               <el-select v-model="applicationForm.application.residency_stay">
                 <el-option
                   v-for="item in residencyYearOptions"
@@ -624,14 +706,12 @@ const checkAdditional = (question) => {
           </el-form-item>
           <el-form-item
             prop="application.consent_name"
-            :label="$t('application.nameForConsent')"
-            required>
+            :label="$t('application.nameForConsent')">
             <el-input v-model="applicationForm.application.consent_name" />
           </el-form-item>
           <el-form-item
             prop="application.consent_phone_no"
             :label="$t('application.phoneForConsent')"
-            required
             :rules="rules.phone_no">
             <el-input v-model="applicationForm.application.consent_phone_no" />
           </el-form-item>

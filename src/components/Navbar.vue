@@ -132,16 +132,16 @@ const tryLogin = () => {
     @opened="tryLogin"
   >
     <el-form label-width="auto" :model="loginForm">
-      <el-form-item label="Username">
+      <el-form-item :label="$t('operation.username')">
         <el-input ref="usernameRef" v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item label="Password">
+      <el-form-item :label="$t('operation.password')">
         <el-input type="password" v-model="loginForm.password" show-password />
       </el-form-item>
       <el-form-item>
         <!-- <el-button @click="()=>loginDrawer=false">Cancel</el-button> -->
         <el-button type="primary" native-type="submit" @click="login" :loading="profileStore.isLoading">
-          Log In
+          {{ $t('operation.login') }}
         </el-button>
       </el-form-item>
     </el-form>

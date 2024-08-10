@@ -13,17 +13,21 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  rules: {
+    type: Array,
+    default: []
+  }
 });
 </script>
 
 <template>
-  <el-form-item :prop="propName+'.en'" :required="required">
+  <el-form-item :prop="propName+'.en'" :rules="rules">
     <el-input :type="isTextarea?'textarea':'text'" v-model="model.en" placeholder="EN" />
   </el-form-item>
-  <el-form-item :prop="propName+'.zh_Hant'" :required="required">
+  <el-form-item :prop="propName+'.zh_Hant'" :rules="rules">
     <el-input :type="isTextarea?'textarea':'text'" v-model="model.zh_Hant" placeholder="繁" />
   </el-form-item>
-  <el-form-item :prop="propName+'.zh'" :required="required">
+  <el-form-item :prop="propName+'.zh'" :rules="rules">
     <el-input :type="isTextarea?'textarea':'text'" v-model="model.zh" placeholder="简" />
   </el-form-item>
 </template>

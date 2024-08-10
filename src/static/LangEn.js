@@ -8,6 +8,9 @@ const localization = {
   },
   operation: {
     adminLogin: 'Log In as Admin',
+    username: 'Username',
+    password: 'Password',
+    login: 'Log In',
     logout: 'Log Out',
     update: 'Update',
     delete: 'Delete',
@@ -119,6 +122,67 @@ const localization = {
   record: {
     price: 'Price',
     submittedTime: 'Submitted Time'
+  },
+  formRule: {
+    course: {
+      title: 'Title has to be input in three languages.',
+      description: 'Description has to be input in three languages.',
+      startOpenDate: 'Please select start date of opening.',
+      endOpenDate: 'Please select end date of opening.',
+      validEarlyBird: 'Early bird discount must be number.',
+      earlyBirdEndDate: 'Early bird end date must be provide if discount is not $0.',
+      validIgDiscount: 'Instagram follower discount must be number.',
+      validReturnDiscount: 'Returning student discount must be number.',
+    },
+    class: {
+      className: 'Class name has to be input in three languages.',
+      tutorName: 'Please input tutor name.',
+      venue: 'Please input venue.',
+      startDate: 'Please select start date.',
+      endDate: 'Please select end date.',
+      weekday: 'Please select at least one weekday.',
+      startTime: 'Please select start time.',
+      endTime: 'Please select end time.',
+      capacity: 'Capacity cannot be empty.',
+      validCapacity: 'Capacity must be number.',
+      price: 'Price cannot be empty.',
+      validPrice: 'Price must be number.',
+      maxAge: 'Max age cannot be empty.',
+      validMaxAge: 'Max age must be number.',
+      minAge: 'Min age cannot be empty.',
+      validMinAge: 'Min age must be number.',
+      minAttendance: 'Min attendance cannot be empty.',
+      validMinAttendance: 'Min attendance must be number.',
+    },
+    student: {
+      firstName: 'Please input first name.',
+      lastName: 'Please input last name.',
+      gender: 'Please select gender.',
+      dob: 'Please select date of birth.',
+      phone: 'Please input phone number.',
+      validPhone: 'Please input valid number.',
+      email: 'Please input an email address.',
+      validEmail: 'Please input a valid email address.',
+      address: 'Please input address.',
+      city: 'Please select city.',
+      postal: 'Please input postal code',
+      validPostal: 'Please input valid postal code',
+      credit: 'Credit balance cannot be empty.',
+      validCredit: 'Credit balance must be number.'
+    },
+    application: {
+      class: 'Please select at least one class.',
+      classAge: 'Out of range of age for class: ',
+      parentName: "Please input parent/guardian's full name.",
+      relationshipToStudent: 'Please select the relationship to student.',
+      emergencyName: 'Please input name for emergency contact.',
+      emergencyPhone: '',
+      validEmergencyPhone: '',
+      residencyStatus: 'Please select residency status.',
+      placeOfOrigin: 'Please input place of origin.',
+      stayedYear: 'Please select an option of stayed year.',
+      nameForConsent: 'Please input a name for consent.'
+    }
   }
 };
 

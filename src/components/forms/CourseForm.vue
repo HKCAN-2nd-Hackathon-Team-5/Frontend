@@ -1,10 +1,12 @@
 <script setup>
-import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, watch, onMounted, onUnmounted, nextTick, computed } from 'vue';
 import MultiLangInput from './MultiLangInput.vue';
 import apis from '../../apis';
 import { useLanguageStore } from '../../stores/language';
+import { useI18n } from 'vue-i18n';
 
 const languageStore = useLanguageStore()
+const { t } = useI18n()
 const props = defineProps({
   form: Object,
   isShow: {
@@ -105,6 +107,52 @@ const handleCourseSelectionChange = (val) => {
 }
 
 const ruleFormRef = ref()
+const rules = computed(() => ({
+  title: [{
+    required: true,
+    message: t('formRule.course.title'),
+    trigger: 'blur'
+  }],
+  description: [{
+    required: true,
+    message: t('formRule.course.description'),
+    trigger: 'blur'
+  }],
+  start_date: [{
+    required: true,
+    message: t('formRule.course.startOpenDate'),
+    trigger: 'change'
+  }],
+  end_date: [{
+    required: true,
+    message: t('formRule.course.endOpenDate'),
+    trigger: 'change'
+  }],
+  'early_bird.discount': [{
+    type: 'number',
+    message: t('formRule.course.validEarlyBird'),
+    trigger: 'change'
+  }],
+  'early_bird.end_date': [{
+    validator: checkEndDateNeedy,
+    trigger: 'change'
+  }],
+  ig_discount: [{
+    type: 'number',
+    message: t('formRule.course.validIgDiscount'),
+    trigger: 'change'
+  }],
+  return_discount: [{
+    type: 'number',
+    message: t('formRule.course.validReturnDiscount'),
+    trigger: 'change'
+  }],
+}))
+const checkEndDateNeedy = (rule, value, callback) => {
+  if ((value === '' || !value) && courseForm.value.early_bird.discount !== 0) {
+    return callback(new Error(t('formRule.course.earlyBirdEndDate')))
+  }
+}
 const submit = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
@@ -177,92 +225,28 @@ onUnmounted(() => {
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     align-center>
-    <el-form
-      label-position="top"
-      ref="ruleFormRef"
-      :model="courseForm"
-      label-width="auto"
-      scroll-to-error>
-      <el-form-item :label="$t('course.courseTitle')" required />
-      <multi-lang-input prop-name="title" v-model="courseForm.title" required/>
-      <el-form-item :label="$t('course.description')" required />
-      <multi-lang-input isTextarea prop-name="desc" v-model="courseForm.desc" required/>
-      <el-form-item prop="start_date" :label="$t('course.startOpenDate')" required>
-        <el-date-picker
-          v-model="courseForm.start_date"
-          type="date"
-          placeholder="YYYY-MM-DD"
-          format="YYYY-MM-DD"
-          value-format="YYYY-MM-DD"
-          :editable="false"
-          :clearable="false"
-        />
-      </el-form-item>
-      <el-form-item prop="end_date" :label="$t('course.endOpenDate')" required>
-        <el-date-picker
-          v-model="courseForm.end_date"
-          type="date"
-          placeholder="YYYY-MM-DD"
-          format="YYYY-MM-DD"
-          value-format="YYYY-MM-DD"
-          :editable="false"
-          :clearable="false"
-        />
-      </el-form-item>
-      <el-form-item :label="$t('title.class')">
-        <el-table
-          ref="classTableRef"
-          v-loading="loading"
-          :data="classList"
-          max-height="30vh"
-          style="width: 100%"
-          @selection-change="handleCourseSelectionChange">
-          <el-table-column type="selection" />
-          <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
-          <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
-          <el-table-column prop="venue" :label="$t('class.venue')" />
-          <el-table-column :label="$t('class.date')">
-            <template #default="scope">
-              {{ scope.row.start_date }} - {{ scope.row.end_date }}
-            </template>
-          </el-table-column>
-          <el-table-column :label="$t('class.weekday')">
-            <template #default="scope">
-              {{ scope.row.weekday.toString() }}
-            </template>
-          </el-table-column>
-          <el-table-column :label="$t('class.exceptedDate')">
-            <template #default="scope">
-              {{ scope.row.except_date?.toString() }}
-            </template>
-          </el-table-column>
-          <el-table-column :label="$t('class.time')">
-            <template #default="scope">
-              {{ scope.row.start_time }} - {{ scope.row.end_time }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="min_attendance" :label="$t('class.minAttendance')" />
-          <el-table-column prop="capacity" :label="$t('class.capacity')" />
-          <el-table-column :label="$t('class.age')">
-            <template #default="scope">
-              {{ scope.row.age_min }} - {{ scope.row.age_max }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="price" :label="$t('class.price')" />
-        </el-table>
-      </el-form-item>
-      <el-form-item prop="is_kid_form" :label="$t('course.forKids')">
-        <el-switch v-model="courseForm.is_kid_form" />
-      </el-form-item>
-      <el-form-item :label="$t('course.earlyBird')">
-        <el-form-item :label="$t('course.discount')">
-          <el-input-number
-            v-model="courseForm.early_bird.discount"
-            :min="0" />
-        </el-form-item>
-        <el-form-item prop="early_bird.end_date" :label="$t('course.endDate')" :required="courseForm.early_bird.discount>0">
+    <el-scrollbar ref="scroll" max-height="70vh">
+      <el-form
+        label-position="top"
+        ref="ruleFormRef"
+        :model="courseForm"
+        label-width="auto"
+        :rules="rules"
+        scroll-to-error>
+        <el-form-item :label="$t('course.courseTitle')" required />
+        <multi-lang-input
+          prop-name="title"
+          v-model="courseForm.title"
+          :rules="rules.title" />
+        <el-form-item :label="$t('course.description')" required/>
+        <multi-lang-input
+          isTextarea
+          prop-name="desc"
+          v-model="courseForm.desc"
+          :rules="rules.description" />
+        <el-form-item prop="start_date" :label="$t('course.startOpenDate')" required>
           <el-date-picker
-            v-model="courseForm.early_bird.end_date"
+            v-model="courseForm.start_date"
             type="date"
             placeholder="YYYY-MM-DD"
             format="YYYY-MM-DD"
@@ -271,28 +255,102 @@ onUnmounted(() => {
             :clearable="false"
           />
         </el-form-item>
-      </el-form-item>
-      <el-form-item :label="$t('course.igDiscount')">
-        <el-input-number
-          v-model="courseForm.ig_discount"
-          :min="0" />
-      </el-form-item>
-      <el-form-item :label="$t('course.returnDiscount')">
-        <el-input-number
-          v-model="courseForm.return_discount"
-          :min="0" />
-      </el-form-item>
-      <el-form-item :label="$t('course.additionalQuestion')">
-        <el-form-item v-for="i in 5" :label="`Q${i}`">
-          <multi-lang-input isTextarea :prop-name="`add_questions.q${i}`" v-model="courseForm.add_questions[`q${i}`]" />
+        <el-form-item prop="end_date" :label="$t('course.endOpenDate')" required>
+          <el-date-picker
+            v-model="courseForm.end_date"
+            type="date"
+            placeholder="YYYY-MM-DD"
+            format="YYYY-MM-DD"
+            value-format="YYYY-MM-DD"
+            :editable="false"
+            :clearable="false"
+          />
         </el-form-item>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="success" @click="submit(ruleFormRef)">{{ props.isNew?$t('operation.add'):$t('operation.update') }}</el-button>
-        <el-button @click="closeDialog">{{ $t('operation.cancel') }}</el-button>
-        <el-button v-if="!props.isNew" type="danger" @click="deleteCourse">{{ $t('operation.delete') }}</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form-item :label="$t('title.class')">
+          <el-table
+            ref="classTableRef"
+            v-loading="loading"
+            :data="classList"
+            max-height="40vh"
+            style="width: 100%"
+            @selection-change="handleCourseSelectionChange">
+            <el-table-column type="selection" />
+            <el-table-column :prop="'course_name.'+languageStore.lang" :label="$t('class.className')" />
+            <el-table-column prop="tutor_name" :label="$t('class.tutorName')" />
+            <el-table-column prop="venue" :label="$t('class.venue')" />
+            <el-table-column :label="$t('class.date')">
+              <template #default="scope">
+                {{ scope.row.start_date }} - {{ scope.row.end_date }}
+              </template>
+            </el-table-column>
+            <el-table-column :label="$t('class.weekday')">
+              <template #default="scope">
+                {{ scope.row.weekday.toString() }}
+              </template>
+            </el-table-column>
+            <el-table-column :label="$t('class.exceptedDate')">
+              <template #default="scope">
+                {{ scope.row.except_date?.toString() }}
+              </template>
+            </el-table-column>
+            <el-table-column :label="$t('class.time')">
+              <template #default="scope">
+                {{ scope.row.start_time }} - {{ scope.row.end_time }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="min_attendance" :label="$t('class.minAttendance')" />
+            <el-table-column prop="capacity" :label="$t('class.capacity')" />
+            <el-table-column :label="$t('class.age')">
+              <template #default="scope">
+                {{ scope.row.age_min }} - {{ scope.row.age_max }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="price" :label="$t('class.price')" />
+          </el-table>
+        </el-form-item>
+        <el-form-item prop="is_kid_form" :label="$t('course.forKids')">
+          <el-switch v-model="courseForm.is_kid_form" />
+        </el-form-item>
+        <el-form-item prop="early_bird.discount" :label="$t('course.earlyBird')">
+          <el-form-item :label="$t('course.discount')">
+            <el-input-number
+              v-model="courseForm.early_bird.discount"
+              :min="0" />
+          </el-form-item>
+          <el-form-item prop="early_bird.end_date" :label="$t('course.endDate')">
+            <el-date-picker
+              v-model="courseForm.early_bird.end_date"
+              type="date"
+              placeholder="YYYY-MM-DD"
+              format="YYYY-MM-DD"
+              value-format="YYYY-MM-DD"
+              :editable="false"
+              :clearable="false"
+            />
+          </el-form-item>
+        </el-form-item>
+        <el-form-item prop="ig_discount" :label="$t('course.igDiscount')">
+          <el-input-number
+            v-model="courseForm.ig_discount"
+            :min="0" />
+        </el-form-item>
+        <el-form-item prop="return_discount" :label="$t('course.returnDiscount')">
+          <el-input-number
+            v-model="courseForm.return_discount"
+            :min="0" />
+        </el-form-item>
+        <el-form-item :label="$t('course.additionalQuestion')" />
+        <div v-for="i in 5">
+          <el-form-item :label="`Q${i}`" />
+          <multi-lang-input isTextarea :prop-name="`add_questions.q${i}`" v-model="courseForm.add_questions[`q${i}`]" />
+        </div>
+        <el-form-item>
+          <el-button type="success" @click="submit(ruleFormRef)">{{ props.isNew?$t('operation.add'):$t('operation.update') }}</el-button>
+          <el-button @click="closeDialog">{{ $t('operation.cancel') }}</el-button>
+          <el-button v-if="!props.isNew" type="danger" @click="deleteCourse">{{ $t('operation.delete') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-scrollbar>
   </el-dialog>
 </template>
 

@@ -1,7 +1,9 @@
 <script setup>
-import { ref, reactive, watch, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, watch, onMounted, onUnmounted, nextTick, computed } from 'vue';
 import apis from '../../apis';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n()
 const props = defineProps({
   form: Object,
   isShow: {
@@ -101,29 +103,101 @@ const genderOptions = [
   },
 ];
 
-const rules = reactive({
+const cityOptions = [
+  {
+    value: 'markham',
+    label: 'markham',
+  },
+  {
+    value: 'richmondHill',
+    label: 'richmondHill',
+  },
+  {
+    value: 'scarborough',
+    label: 'scarborough',
+  },
+  {
+    value: 'cityOfToronto',
+    label: 'cityOfToronto',
+  },
+  {
+    value: 'northYork',
+    label: 'northYork',
+  },
+  {
+    value: 'others',
+    label: 'others',
+  },
+]
+
+const rules = computed(() => ({
+  first_name: [{
+    required: true,
+    message: t('formRule.student.firstName'),
+    trigger: 'blur'
+  }],
+  last_name: [{
+    required: true,
+    message: t('formRule.student.lastName'),
+    trigger: 'blur'
+  }],
+  gender: [{
+    required: true,
+    message: t('formRule.student.gender'),
+    trigger: 'change'
+  }],
+  dob: [{
+    required: true,
+    message: t('formRule.student.dob'),
+    trigger: 'change'
+  }],
   phone_no: [{
     required: true,
-    message: 'Please input phone number',
-    trigger: 'change'
+    message: t('formRule.student.phone'),
+    trigger: 'blur'
   }, {
     pattern: /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-    message: 'Please input valid number',
-    trigger: ['blur', 'change']
+    message: t('formRule.student.validPhone'),
+    trigger: 'change'
   }],
   email: [{
-    type: 'email',
     required: true,
-    message: 'Please input a valid email address',
+    message: t('formRule.student.email'),
+    trigger: 'blur'
+  }, {
+    type: 'email',
+    message: t('formRule.student.validEmail'),
     trigger: 'change',
   },],
+  address: [{
+    required: true,
+    message: t('formRule.student.address'),
+    trigger: 'blur'
+  }],
+  city: [{
+    required: true,
+    message: t('formRule.student.city'),
+    trigger: 'change'
+  }],
   postal_code: [{
     required: true,
+    message: t('formRule.student.postal'),
+    trigger: 'blur'
+  }, {
     pattern: /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/,
-    message: 'Please input valid postal code',
-    trigger: ['blur', 'change']
+    message: t('formRule.student.validPostal'),
+    trigger: 'change'
+  }],
+  credit_balance: [{
+    required: true,
+    message: t('formRule.student.credit'),
+    trigger: 'blur'
+  }, {
+    type: 'number',
+    message: t('formRule.student.validCredit'),
+    trigger: 'change'
   }]
-});
+}));
 </script>
 
 <template>
@@ -141,13 +215,13 @@ const rules = reactive({
       :rules="rules"
       label-width="auto"
       scroll-to-error>
-      <el-form-item prop="first_name" :label="$t('student.firstName')" required>
+      <el-form-item prop="first_name" :label="$t('student.firstName')">
         <el-input v-model="studentForm.first_name" />
       </el-form-item>
-      <el-form-item prop="last_name" :label="$t('student.lastName')" required>
+      <el-form-item prop="last_name" :label="$t('student.lastName')">
         <el-input v-model="studentForm.last_name" />
       </el-form-item>
-      <el-form-item prop="gender" :label="$t('student.gender')" required>
+      <el-form-item prop="gender" :label="$t('student.gender')">
         <el-select
           v-model="studentForm.gender"
         >
@@ -159,7 +233,7 @@ const rules = reactive({
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="dob" :label="$t('student.dob')" required>
+      <el-form-item prop="dob" :label="$t('student.dob')">
         <el-date-picker
           v-model="studentForm.dob"
           type="date"
@@ -170,22 +244,31 @@ const rules = reactive({
           :clearable="false"
         />
       </el-form-item>
-      <el-form-item :label="$t('student.phone')" prop="PHONE_NO">
+      <el-form-item :label="$t('student.phone')" prop="phone_no">
         <el-input v-model="studentForm.phone_no" />
       </el-form-item>
-      <el-form-item :label="$t('student.email')" prop="EMAIL">
+      <el-form-item :label="$t('student.email')" prop="email">
         <el-input v-model="studentForm.email" />
       </el-form-item>
-      <el-form-item prop="address" :label="$t('student.address')" required>
+      <el-form-item prop="address" :label="$t('student.address')">
         <el-input v-model="studentForm.address" />
       </el-form-item>
-      <el-form-item prop="city" :label="$t('student.city')" required>
-        <el-input v-model="studentForm.city" />
+      <el-form-item prop="city" :label="$t('student.city')">
+        <el-select
+          v-model="studentForm.city"
+        >
+          <el-option
+            v-for="item in cityOptions"
+            :key="item.value"
+            :label="$t('student.'+item.label)"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item :label="$t('student.postal')" prop="POSTAL_CODE">
+      <el-form-item :label="$t('student.postal')" prop="postal_code">
         <el-input v-model="studentForm.postal_code" />
       </el-form-item>
-      <el-form-item prop="credit_balance" :label="$t('student.credit')" required>
+      <el-form-item prop="credit_balance" :label="$t('student.credit')">
         <el-input-number
           v-model="studentForm.credit_balance"
           :min="0" />

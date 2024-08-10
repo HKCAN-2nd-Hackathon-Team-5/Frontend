@@ -53,16 +53,16 @@ const closeForm = () => {
 </script>
 
 <template>
-      <el-input
-        size="large"
-        :placeholder="`${$t('course.courseTitle')}/${$t('course.description')}`"
-        v-model="searchInput">
-        <template #prepend>
-          <el-icon>
-            <Search />
-          </el-icon>
-        </template>
-      </el-input>
+  <el-input
+    size="large"
+    :placeholder="`${$t('course.courseTitle')}/${$t('course.description')}`"
+    v-model="searchInput">
+    <template #prepend>
+      <el-icon>
+        <Search />
+      </el-icon>
+    </template>
+  </el-input>
   <div class="card-container" v-loading="loading">
     <el-card
       class="course-card"
