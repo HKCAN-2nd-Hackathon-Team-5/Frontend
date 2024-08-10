@@ -154,6 +154,7 @@ const checkClassAvailability = (rule, value, callback) => {
       callback(new Error(`${t('formRule.application.classAge')}${classItem.course_name[languageStore.lang]}`))
     }
   })
+  callback()
 }
 const resetForm = () => {
   applicationForm.value = {

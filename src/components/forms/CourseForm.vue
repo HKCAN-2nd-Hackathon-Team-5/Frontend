@@ -152,6 +152,7 @@ const checkEndDateNeedy = (rule, value, callback) => {
   if ((value === '' || !value) && courseForm.value.early_bird.discount !== 0) {
     return callback(new Error(t('formRule.course.earlyBirdEndDate')))
   }
+  callback()
 }
 const submit = async (formEl) => {
   if (!formEl) return
